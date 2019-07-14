@@ -1,0 +1,20 @@
+{
+    "name": "UGF.Logs.Editor.Tests",
+    "references": [
+        "GUID:6ca210c6fc8b79d4292f3cdb1061c73e",
+        "GUID:5a7d096f2df0ab6468463b05a6ac452a"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
