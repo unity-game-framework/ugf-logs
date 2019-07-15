@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace UGF.Logs.Editor
 {
-    public class LogSettings
+    public class LogEditorSettings
     {
         public bool Changed { get { return !m_defines.SequenceEqual(m_definesChanged); } }
         public bool LogInfo { get { return GetDefineSate(LogEditorUtility.DefineLogInfo); } set { SetDefineState(LogEditorUtility.DefineLogInfo, value); } }
@@ -11,22 +11,32 @@ namespace UGF.Logs.Editor
         public bool LogError { get { return GetDefineSate(LogEditorUtility.DefineLogError); } set { SetDefineState(LogEditorUtility.DefineLogError, value); } }
         public bool LogException { get { return GetDefineSate(LogEditorUtility.DefineLogException); } set { SetDefineState(LogEditorUtility.DefineLogException, value); } }
 
-        private readonly IEnumerable<string> m_defines;
+        private readonly HashSet<string> m_defines;
         private readonly HashSet<string> m_definesChanged;
 
-        public LogSettings(IEnumerable<string> defines)
+        public LogEditorSettings(IEnumerable<string> defines)
         {
-            m_defines = defines;
+            m_defines = new HashSet<string>(defines);
             m_definesChanged = new HashSet<string>(defines);
         }
 
-        public void Reset()
+        public void Revert()
         {
             m_definesChanged.Clear();
 
             foreach (string define in m_defines)
             {
                 m_definesChanged.Add(define);
+            }
+        }
+
+        public void Apply()
+        {
+            m_defines.Clear();
+
+            foreach (string define in m_definesChanged)
+            {
+                m_defines.Add(define);
             }
         }
 
@@ -49,7 +59,7 @@ namespace UGF.Logs.Editor
 
         public IEnumerable<string> GetDefines()
         {
-            return m_definesChanged.ToArray();
+            return m_defines.ToArray();
         }
     }
 }

@@ -10,27 +10,24 @@ namespace UGF.Logs.Editor
         public static string DefineLogError { get; } = "UGF_LOG_ERROR";
         public static string DefineLogException { get; } = "UGF_LOG_EXCEPTION";
 
-        public static LogSettings GetSettings()
+        public static LogEditorSettings GetSettings()
         {
             BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
             BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
             string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
             IEnumerable<string> defines = symbols.Split(';');
 
-            return new LogSettings(defines);
+            return new LogEditorSettings(defines);
         }
 
-        public static void SetSettings(LogSettings settings)
+        public static void SetSettings(LogEditorSettings settings)
         {
-            if (settings.Changed)
-            {
-                IEnumerable<string> defines = settings.GetDefines();
-                BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-                BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
-                string symbols = string.Join(";", defines);
+            IEnumerable<string> defines = settings.GetDefines();
+            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
+            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
+            string symbols = string.Join(";", defines);
 
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
-            }
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
         }
     }
 }

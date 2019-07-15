@@ -4,11 +4,11 @@ using UnityEngine.UIElements;
 
 namespace UGF.Logs.Editor
 {
-    internal class LogSettingsProviderEditor : SettingsProvider
+    internal class LogEditorSettingsProviderEditor : SettingsProvider
     {
-        private LogSettings m_settings;
+        private LogEditorSettings m_settings;
 
-        public LogSettingsProviderEditor() : base("Project/UGF/Logs", SettingsScope.Project, new[] { "Log" })
+        public LogEditorSettingsProviderEditor() : base("Project/UGF/Logs", SettingsScope.Project, new[] { "Log" })
         {
         }
 
@@ -75,14 +75,14 @@ namespace UGF.Logs.Editor
 
         private void Revert()
         {
-            m_settings.Reset();
+            m_settings.Revert();
         }
 
         private void Apply()
         {
-            LogEditorUtility.SetSettings(m_settings);
+            m_settings.Apply();
 
-            m_settings = LogEditorUtility.GetSettings();
+            LogEditorUtility.SetSettings(m_settings);
         }
     }
 }

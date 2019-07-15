@@ -2,12 +2,12 @@ using UnityEditor;
 
 namespace UGF.Logs.Editor
 {
-    internal static class LogSettingsProvider
+    internal static class LogEditorSettingsProvider
     {
         [SettingsProvider]
         private static SettingsProvider GetEditor()
         {
-            return new LogSettingsProviderEditor();
+            return new LogEditorSettingsProviderEditor();
         }
     }
 }
