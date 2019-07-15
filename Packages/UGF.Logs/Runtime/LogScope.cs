@@ -4,38 +4,28 @@ using UnityEngine;
 namespace UGF.Logs.Runtime
 {
     /// <summary>
-    /// Represents local scope of the log to temporarily enable or disable logging of the current logger specified in <see cref="Log"/>.
+    /// Represents local scope of the specified logger.
     /// </summary>
     public struct LogScope : IDisposable
     {
-        private readonly bool m_enabled;
+        private readonly ILogger m_logger;
 
         /// <summary>
-        /// Creates scope with value that determines whether logger will be enabled inside of the scope.
+        /// Creates the scope with the specified logger.
         /// </summary>
-        /// <param name="enabled">The value to enable or disable logger.</param>
-        public LogScope(bool enabled)
+        /// <param name="logger">The logger to use inside the scope.</param>
+        public LogScope(ILogger logger)
         {
-            m_enabled = false;
+            if (logger == null) throw new ArgumentNullException(nameof(logger));
 
-            ILogger logger = Log.Logger;
+            m_logger = Log.Logger;
 
-            if (logger != null)
-            {
-                logger.logEnabled = enabled;
-
-                m_enabled = logger.logEnabled;
-            }
+            Log.Logger = logger;
         }
 
         public void Dispose()
         {
-            ILogger logger = Log.Logger;
-
-            if (logger != null)
-            {
-                logger.logEnabled = m_enabled;
-            }
+            Log.Logger = m_logger;
         }
     }
 }
