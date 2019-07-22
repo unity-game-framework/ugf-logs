@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
 namespace UGF.Logs.Runtime
 {
@@ -20,7 +19,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Gets or sets logger to use. (Default is Unity Logger)
         /// </summary>
-        public static ILogger Logger { get; set; } = Debug.unityLogger;
+        public static ILogger Logger { get; set; } = UnityEngine.Debug.unityLogger;
 
         /// <summary>
         /// Logs message as info with the specified message and arguments.
@@ -59,41 +58,39 @@ namespace UGF.Logs.Runtime
         }
 
         /// <summary>
-        /// Logs message as info with the specified tag, message and arguments.
+        /// Logs message as debug info with the specified message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_INFO` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the `UGF_LOG_DEBUG` compilation symbol is defined.
         /// </para>
         /// </summary>
-        /// <param name="tag">The tag of the log.</param>
         /// <param name="message">The formattable message.</param>
         /// <param name="arg0">The first argument.</param>
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
-        [Conditional("UGF_LOG_INFO")]
+        [Conditional("UGF_LOG_DEBUG")]
         [Conditional("UNITY_EDITOR")]
         [Conditional("DEVELOPMENT_BUILD")]
         [StringFormatMethod("message")]
-        public static void Info(string tag, string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        public static void Debug(string message, object arg0 = null, object arg1 = null, object arg2 = null)
         {
-            Message(LogType.Log, tag, message, arg0, arg1, arg2);
+            Message(LogType.Log, message, arg0, arg1, arg2);
         }
 
         /// <summary>
-        /// Logs message as info with the specified tag, message and arguments.
+        /// Logs message as debug info with the specified message and arguments.
         /// <para>
         /// Invocation of this method will be included in release build, only if the `UGF_LOG_INFO` compilation symbol is defined.
         /// </para>
         /// </summary>
-        /// <param name="tag">The tag of the log.</param>
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
-        [Conditional("UGF_LOG_INFO")]
+        [Conditional("UGF_LOG_DEBUG")]
         [Conditional("UNITY_EDITOR")]
         [Conditional("DEVELOPMENT_BUILD")]
         [StringFormatMethod("message")]
-        public static void Info(string tag, string message, params object[] args)
+        public static void Debug(string message, params object[] args)
         {
-            Message(LogType.Log, tag, message, args);
+            Message(LogType.Log, message, args);
         }
 
         /// <summary>
@@ -202,29 +199,12 @@ namespace UGF.Logs.Runtime
             if (message == null) throw new ArgumentNullException(nameof(message));
             if (Logger == null) throw new InvalidOperationException("The logger not specified.");
 
-            Logger.Log(logType, string.Format(message, arg0, arg1, arg2));
-        }
+            if (arg0 != null || arg1 != null || arg2 != null)
+            {
+                message = string.Format(message, arg0, arg1, arg2);
+            }
 
-        /// <summary>
-        /// Logs message with the specified log type, message and arguments.
-        /// <para>
-        /// Invocation of this method always include in release build.
-        /// </para>
-        /// </summary>
-        /// <param name="logType">The type of the log.</param>
-        /// <param name="tag">The tag of the log.</param>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [StringFormatMethod("message")]
-        public static void Message(LogType logType, string tag, string message, object arg0 = null, object arg1 = null, object arg2 = null)
-        {
-            if (tag == null) throw new ArgumentNullException(nameof(tag));
-            if (message == null) throw new ArgumentNullException(nameof(message));
-            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
-
-            Logger.Log(logType, tag, string.Format(message, arg0, arg1, arg2));
+            Logger.Log(logType, message);
         }
 
         /// <summary>
@@ -242,27 +222,12 @@ namespace UGF.Logs.Runtime
             if (message == null) throw new ArgumentNullException(nameof(message));
             if (Logger == null) throw new InvalidOperationException("The logger not specified.");
 
-            Logger.Log(logType, string.Format(message, args));
-        }
+            if (args.Length > 0)
+            {
+                message = string.Format(message, args);
+            }
 
-        /// <summary>
-        /// Logs message with the specified log type, message and arguments.
-        /// <para>
-        /// Invocation of this method always include in release build.
-        /// </para>
-        /// </summary>
-        /// <param name="logType">The type of the log.</param>
-        /// <param name="tag">The tag of the log.</param>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [StringFormatMethod("message")]
-        public static void Message(LogType logType, string tag, string message, params object[] args)
-        {
-            if (tag == null) throw new ArgumentNullException(nameof(tag));
-            if (message == null) throw new ArgumentNullException(nameof(message));
-            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
-
-            Logger.Log(logType, tag, string.Format(message, args));
+            Logger.Log(logType, message);
         }
     }
 }

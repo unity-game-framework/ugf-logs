@@ -14,6 +14,11 @@ namespace UGF.Logs.Editor
         public static string DefineLogInfo { get; } = "UGF_LOG_INFO";
 
         /// <summary>
+        /// Gets the define used to include debug logs in release build. (Value is 'UGF_LOG_DEBUG')
+        /// </summary>
+        public static string DefineLogDebug { get; } = "UGF_LOG_DEBUG";
+
+        /// <summary>
         /// Gets the define used to include warning logs in release build. (Value is 'UGF_LOG_WARNING')
         /// </summary>
         public static string DefineLogWarning { get; } = "UGF_LOG_WARNING";
