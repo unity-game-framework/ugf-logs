@@ -19,6 +19,11 @@ namespace UGF.Logs.Editor
         public bool LogInfo { get { return GetDefineSate(LogEditorUtility.DefineLogInfo); } set { SetDefineState(LogEditorUtility.DefineLogInfo, value); } }
 
         /// <summary>
+        /// Gets or sets the value that determines whether 'UGF_LOG_DEBUG' define is specified.
+        /// </summary>
+        public bool LogDebug { get { return GetDefineSate(LogEditorUtility.DefineLogDebug); } set { SetDefineState(LogEditorUtility.DefineLogDebug, value); } }
+
+        /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_WARNING' define is specified.
         /// </summary>
         public bool LogWarning { get { return GetDefineSate(LogEditorUtility.DefineLogWarning); } set { SetDefineState(LogEditorUtility.DefineLogWarning, value); } }
