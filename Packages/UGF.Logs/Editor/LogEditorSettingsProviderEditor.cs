@@ -37,6 +37,7 @@ namespace UGF.Logs.Editor
             using (new EditorGUI.IndentLevelScope())
             {
                 m_settings.LogInfo = EditorGUILayout.Toggle("Info", m_settings.LogInfo);
+                m_settings.LogDebug = EditorGUILayout.Toggle("Debug", m_settings.LogDebug);
                 m_settings.LogWarning = EditorGUILayout.Toggle("Warning", m_settings.LogWarning);
                 m_settings.LogError = EditorGUILayout.Toggle("Error", m_settings.LogError);
                 m_settings.LogException = EditorGUILayout.Toggle("Exception", m_settings.LogException);
