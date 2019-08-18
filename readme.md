@@ -1,12 +1,11 @@
 # com.ugf.logs
 
-UGF.logs
+UGF.Logs
 
 ## Info
 
-- **Version**: `1.0.0-preview.1`
-- **Unity Version**: `2019.1.0`
-- **Scripting Runtime Version**: `.NET 4.x Equivalent`
+- **Version**: `1.0.0-preview.2`
+- **Unity Version**: `2019.2.0`
 - **Api Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
@@ -24,7 +23,7 @@ UGF.logs
 
 ## Description
 
-No description.
+Provides conditional compiled logs.
 
 ## How to Install
 

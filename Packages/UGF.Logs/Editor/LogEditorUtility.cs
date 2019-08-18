@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 
 namespace UGF.Logs.Editor
@@ -34,20 +36,27 @@ namespace UGF.Logs.Editor
         public static string DefineLogException { get; } = "UGF_LOG_EXCEPTION";
 
         /// <summary>
-        /// Gets the local log settings.
+        /// Gets the project log settings depends on current build target group.
         /// </summary>
         public static LogEditorSettings GetSettings()
         {
-            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
-            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            return GetSettings(EditorUserBuildSettings.selectedBuildTargetGroup);
+        }
+
+        /// <summary>
+        /// Gets the project log settings depends on build target group.
+        /// </summary>
+        /// <param name="buildTargetGroup">The build target group of the project.</param>
+        public static LogEditorSettings GetSettings(BuildTargetGroup buildTargetGroup)
+        {
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
             IEnumerable<string> defines = symbols.Split(';');
 
             return new LogEditorSettings(defines);
         }
 
         /// <summary>
-        /// Sets changed log settings to apply them to project.
+        /// Sets log settings to apply them to the project for current build target group only.
         /// <para>
         /// Applying settings will trigger recompilation.
         /// </para>
@@ -55,12 +64,51 @@ namespace UGF.Logs.Editor
         /// <param name="settings">The log settings to apply.</param>
         public static void SetSettings(LogEditorSettings settings)
         {
+            SetSettings(settings, EditorUserBuildSettings.selectedBuildTargetGroup);
+        }
+
+        /// <summary>
+        /// Sets log settings to apply them to the project for specified build target group.
+        /// <para>
+        /// Applying settings will trigger recompilation.
+        /// </para>
+        /// </summary>
+        /// <param name="settings">The log settings to apply.</param>
+        /// <param name="buildTargetGroup">The build target group.</param>
+        public static void SetSettings(LogEditorSettings settings, BuildTargetGroup buildTargetGroup)
+        {
             IEnumerable<string> defines = settings.GetDefines();
-            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
             string symbols = string.Join(";", defines);
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, symbols);
+        }
+
+        /// <summary>
+        /// Sets log settings to apply them to the project for all known build target groups.
+        /// <para>
+        /// Applying settings will trigger recompilation.
+        /// </para>
+        /// </summary>
+        /// <param name="settings">The log settings to apply.</param>
+        public static void SetSettingsAll(LogEditorSettings settings)
+        {
+            Type type = typeof(BuildTargetGroup);
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
+
+            for (int i = 0; i < fields.Length; i++)
+            {
+                FieldInfo field = fields[i];
+
+                if (!field.IsDefined(typeof(ObsoleteAttribute)))
+                {
+                    var buildTargetGroup = (BuildTargetGroup)field.GetValue(null);
+
+                    if (buildTargetGroup != BuildTargetGroup.Unknown)
+                    {
+                        SetSettings(settings, buildTargetGroup);
+                    }
+                }
+            }
         }
     }
 }
