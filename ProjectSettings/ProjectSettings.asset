@@ -549,6 +549,17 @@ PlayerSettings:
   webGLWasmStreaming: 0
   scriptingDefineSymbols:
     1: UGF_LOG_WARNING
+    4: UGF_LOG_WARNING
+    7: UGF_LOG_WARNING
+    13: UGF_LOG_WARNING
+    14: UGF_LOG_WARNING
+    19: UGF_LOG_WARNING
+    21: UGF_LOG_WARNING
+    25: UGF_LOG_WARNING
+    26: UGF_LOG_WARNING
+    27: UGF_LOG_WARNING
+    28: UGF_LOG_WARNING
+    29: UGF_LOG_WARNING
   platformArchitecture: {}
   scriptingBackend:
     Standalone: 1

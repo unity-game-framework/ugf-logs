@@ -7,6 +7,7 @@ namespace UGF.Logs.Editor
     internal class LogEditorSettingsProviderEditor : SettingsProvider
     {
         private LogEditorSettings m_settings;
+        private readonly GUIContent m_contentApplyAll = new GUIContent("Apply All", "Apply to all Build Target Groups");
 
         public LogEditorSettingsProviderEditor() : base("Project/UGF/Logs", SettingsScope.Project, new[] { "Log" })
         {
@@ -57,6 +58,11 @@ namespace UGF.Logs.Editor
                         Apply();
                     }
 
+                    if (GUILayout.Button(m_contentApplyAll))
+                    {
+                        ApplyAll();
+                    }
+
                     EditorGUILayout.Space();
                 }
 
@@ -84,6 +90,13 @@ namespace UGF.Logs.Editor
             m_settings.Apply();
 
             LogEditorUtility.SetSettings(m_settings);
+        }
+
+        private void ApplyAll()
+        {
+            m_settings.Apply();
+
+            LogEditorUtility.SetSettingsAll(m_settings);
         }
     }
 }
