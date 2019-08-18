@@ -16,27 +16,27 @@ namespace UGF.Logs.Editor
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_INFO' define is specified.
         /// </summary>
-        public bool LogInfo { get { return GetDefineSate(LogEditorUtility.DefineLogInfo); } set { SetDefineState(LogEditorUtility.DefineLogInfo, value); } }
+        public bool LogInfo { get { return GetDefineState(LogEditorUtility.DefineLogInfo); } set { SetDefineState(LogEditorUtility.DefineLogInfo, value); } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_DEBUG' define is specified.
         /// </summary>
-        public bool LogDebug { get { return GetDefineSate(LogEditorUtility.DefineLogDebug); } set { SetDefineState(LogEditorUtility.DefineLogDebug, value); } }
+        public bool LogDebug { get { return GetDefineState(LogEditorUtility.DefineLogDebug); } set { SetDefineState(LogEditorUtility.DefineLogDebug, value); } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_WARNING' define is specified.
         /// </summary>
-        public bool LogWarning { get { return GetDefineSate(LogEditorUtility.DefineLogWarning); } set { SetDefineState(LogEditorUtility.DefineLogWarning, value); } }
+        public bool LogWarning { get { return GetDefineState(LogEditorUtility.DefineLogWarning); } set { SetDefineState(LogEditorUtility.DefineLogWarning, value); } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_ERROR' define is specified.
         /// </summary>
-        public bool LogError { get { return GetDefineSate(LogEditorUtility.DefineLogError); } set { SetDefineState(LogEditorUtility.DefineLogError, value); } }
+        public bool LogError { get { return GetDefineState(LogEditorUtility.DefineLogError); } set { SetDefineState(LogEditorUtility.DefineLogError, value); } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_EXCEPTION' define is specified.
         /// </summary>
-        public bool LogException { get { return GetDefineSate(LogEditorUtility.DefineLogException); } set { SetDefineState(LogEditorUtility.DefineLogException, value); } }
+        public bool LogException { get { return GetDefineState(LogEditorUtility.DefineLogException); } set { SetDefineState(LogEditorUtility.DefineLogException, value); } }
 
         private readonly HashSet<string> m_defines;
         private readonly HashSet<string> m_definesChanged;
@@ -81,7 +81,7 @@ namespace UGF.Logs.Editor
         /// Gets the value that determines whether the specified define is specified.
         /// </summary>
         /// <param name="define">The define to check.</param>
-        public bool GetDefineSate(string define)
+        public bool GetDefineState(string define)
         {
             return m_definesChanged.Contains(define);
         }
