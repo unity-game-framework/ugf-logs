@@ -1,6 +1,6 @@
 # com.ugf.logs
 
-UGF.logs
+UGF.Logs
 
 ## Info
 
@@ -23,7 +23,7 @@ UGF.logs
 
 ## Description
 
-No description.
+Provides conditional compiled logs.
 
 ## How to Install
 
