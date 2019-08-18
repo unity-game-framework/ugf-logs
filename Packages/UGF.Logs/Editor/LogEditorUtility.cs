@@ -38,9 +38,7 @@ namespace UGF.Logs.Editor
         /// </summary>
         public static LogEditorSettings GetSettings()
         {
-            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
-            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(group);
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
             IEnumerable<string> defines = symbols.Split(';');
 
             return new LogEditorSettings(defines);
@@ -56,11 +54,9 @@ namespace UGF.Logs.Editor
         public static void SetSettings(LogEditorSettings settings)
         {
             IEnumerable<string> defines = settings.GetDefines();
-            BuildTarget target = EditorUserBuildSettings.activeBuildTarget;
-            BuildTargetGroup group = BuildPipeline.GetBuildTargetGroup(target);
             string symbols = string.Join(";", defines);
 
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(group, symbols);
+            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, symbols);
         }
     }
 }

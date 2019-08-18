@@ -63,7 +63,7 @@ namespace UGF.Logs.Editor
                 if (m_settings.Changed)
                 {
                     EditorGUILayout.Space();
-                    EditorGUILayout.HelpBox("Applying settings will trigger recompilation.", MessageType.Info);
+                    EditorGUILayout.HelpBox("Applying settings will trigger project recompilation.", MessageType.Info);
                 }
 
                 if (EditorUserBuildSettings.development)
