@@ -1,114 +1,74 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
 namespace UGF.Logs.Editor
 {
     /// <summary>
-    /// Represents local settings of the logs.
+    /// Represents project settings of the logs.
     /// </summary>
+    [Serializable]
     public class LogEditorSettings
     {
-        /// <summary>
-        /// Gets the value that determines whether settings are changed and not applied.
-        /// </summary>
-        public bool Changed { get { return !m_defines.SequenceEqual(m_definesChanged); } }
+        [SerializeField] private bool m_logInfo;
+        [SerializeField] private bool m_logDebug;
+        [SerializeField] private bool m_logWarning;
+        [SerializeField] private bool m_logError;
+        [SerializeField] private bool m_logException;
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_INFO' define is specified.
         /// </summary>
-        public bool LogInfo { get { return GetDefineState(LogEditorUtility.DefineLogInfo); } set { SetDefineState(LogEditorUtility.DefineLogInfo, value); } }
+        public bool LogInfo { get { return m_logInfo; } set { m_logInfo = value; } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_DEBUG' define is specified.
         /// </summary>
-        public bool LogDebug { get { return GetDefineState(LogEditorUtility.DefineLogDebug); } set { SetDefineState(LogEditorUtility.DefineLogDebug, value); } }
+        public bool LogDebug { get { return m_logDebug; } set { m_logDebug = value; } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_WARNING' define is specified.
         /// </summary>
-        public bool LogWarning { get { return GetDefineState(LogEditorUtility.DefineLogWarning); } set { SetDefineState(LogEditorUtility.DefineLogWarning, value); } }
+        public bool LogWarning { get { return m_logWarning; } set { m_logWarning = value; } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_ERROR' define is specified.
         /// </summary>
-        public bool LogError { get { return GetDefineState(LogEditorUtility.DefineLogError); } set { SetDefineState(LogEditorUtility.DefineLogError, value); } }
+        public bool LogError { get { return m_logError; } set { m_logError = value; } }
 
         /// <summary>
         /// Gets or sets the value that determines whether 'UGF_LOG_EXCEPTION' define is specified.
         /// </summary>
-        public bool LogException { get { return GetDefineState(LogEditorUtility.DefineLogException); } set { SetDefineState(LogEditorUtility.DefineLogException, value); } }
+        public bool LogException { get { return m_logException; } set { m_logException = value; } }
 
-        private readonly HashSet<string> m_defines;
-        private readonly HashSet<string> m_definesChanged;
-
-        /// <summary>
-        /// Creates logs settings with the specified defines of the project.
-        /// </summary>
-        /// <param name="defines">The defines of the project.</param>
-        public LogEditorSettings(IEnumerable<string> defines)
+        internal void InternalSetSettings(HashSet<string> defines)
         {
-            m_defines = new HashSet<string>(defines);
-            m_definesChanged = new HashSet<string>(defines);
+            m_logInfo = defines.Contains(LogEditorUtility.DefineLogInfo);
+            m_logDebug = defines.Contains(LogEditorUtility.DefineLogDebug);
+            m_logWarning = defines.Contains(LogEditorUtility.DefineLogWarning);
+            m_logError = defines.Contains(LogEditorUtility.DefineLogError);
+            m_logException = defines.Contains(LogEditorUtility.DefineLogException);
         }
 
-        /// <summary>
-        /// Reverts all changes.
-        /// </summary>
-        public void Revert()
+        internal void InternalGetDefines(HashSet<string> defines)
         {
-            m_definesChanged.Clear();
-
-            foreach (string define in m_defines)
-            {
-                m_definesChanged.Add(define);
-            }
+            SetupDefine(defines, LogEditorUtility.DefineLogInfo, m_logInfo);
+            SetupDefine(defines, LogEditorUtility.DefineLogDebug, m_logDebug);
+            SetupDefine(defines, LogEditorUtility.DefineLogWarning, m_logWarning);
+            SetupDefine(defines, LogEditorUtility.DefineLogError, m_logError);
+            SetupDefine(defines, LogEditorUtility.DefineLogException, m_logException);
         }
 
-        /// <summary>
-        /// Applies all changes.
-        /// </summary>
-        public void Apply()
-        {
-            m_defines.Clear();
-
-            foreach (string define in m_definesChanged)
-            {
-                m_defines.Add(define);
-            }
-        }
-
-        /// <summary>
-        /// Gets the value that determines whether the specified define is specified.
-        /// </summary>
-        /// <param name="define">The define to check.</param>
-        public bool GetDefineState(string define)
-        {
-            return m_definesChanged.Contains(define);
-        }
-
-        /// <summary>
-        /// Sets the state of the specified define.
-        /// </summary>
-        /// <param name="define">The define.</param>
-        /// <param name="state">The value determines whether the specified define is active.</param>
-        public void SetDefineState(string define, bool state)
+        private void SetupDefine(HashSet<string> defines, string define, bool state)
         {
             if (state)
             {
-                m_definesChanged.Add(define);
+                defines.Add(define);
             }
             else
             {
-                m_definesChanged.Remove(define);
+                defines.Remove(define);
             }
-        }
-
-        /// <summary>
-        /// Gets the applied defines.
-        /// </summary>
-        public IEnumerable<string> GetDefines()
-        {
-            return m_defines.ToArray();
         }
     }
 }
