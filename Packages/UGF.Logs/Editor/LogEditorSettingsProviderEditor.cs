@@ -12,6 +12,7 @@ namespace UGF.Logs.Editor
         private int m_group;
         private SerializedObject m_serializedObject;
         private Styles m_styles;
+        private Content m_content = new Content();
 
         private class GroupItem
         {
@@ -29,7 +30,16 @@ namespace UGF.Logs.Editor
 
         private class Styles
         {
-            public GUIStyle DropdownButton { get; set; } = "DropDownButton";
+            public GUIStyle DropdownButton { get; } = "DropDownButton";
+        }
+
+        private class Content
+        {
+            public GUIContent LogInfoLabel { get; } = new GUIContent("Info", "Determines whether 'UGF_LOG_INFO' define is specified for selected platform.");
+            public GUIContent LogDebugLabel { get; } = new GUIContent("Debug", "Determines whether 'UGF_LOG_DEBUG' define is specified for selected platform.");
+            public GUIContent LogWarningLabel { get; } = new GUIContent("Warning", "Determines whether 'UGF_LOG_WARNING' define is specified for selected platform.");
+            public GUIContent LogErrorLabel { get; } = new GUIContent("Error", "Determines whether 'UGF_LOG_ERROR' define is specified for selected platform.");
+            public GUIContent LogExceptionLabel { get; } = new GUIContent("Exception", "Determines whether 'UGF_LOG_EXCEPTION' define is specified for selected platform.");
         }
 
         public LogEditorSettingsProviderEditor() : base("Project/UGF/Logs", SettingsScope.Project, new[] { "Log" })
@@ -86,19 +96,21 @@ namespace UGF.Logs.Editor
 
             using (new EditorGUI.IndentLevelScope())
             {
-                EditorGUILayout.PropertyField(propertyInfo);
-                EditorGUILayout.PropertyField(propertyDebug);
-                EditorGUILayout.PropertyField(propertyWarning);
-                EditorGUILayout.PropertyField(propertyError);
-                EditorGUILayout.PropertyField(propertyException);
+                EditorGUILayout.PropertyField(propertyInfo, m_content.LogInfoLabel);
+                EditorGUILayout.PropertyField(propertyDebug, m_content.LogDebugLabel);
+                EditorGUILayout.PropertyField(propertyWarning, m_content.LogWarningLabel);
+                EditorGUILayout.PropertyField(propertyError, m_content.LogErrorLabel);
+                EditorGUILayout.PropertyField(propertyException, m_content.LogExceptionLabel);
 
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     GUILayout.FlexibleSpace();
 
-                    if (EditorGUILayout.DropdownButton(group.ContentName, FocusType.Keyboard, m_styles.DropdownButton))
+                    Rect rect = GUILayoutUtility.GetRect(group.ContentName, m_styles.DropdownButton, GUILayout.MinWidth(100F));
+
+                    if (EditorGUI.DropdownButton(rect, group.ContentName, FocusType.Keyboard, m_styles.DropdownButton))
                     {
-                        ShowGroupMenu();
+                        ShowGroupMenu(rect);
                     }
 
                     EditorGUILayout.Space();
@@ -191,7 +203,7 @@ namespace UGF.Logs.Editor
             return new SerializedObject(data);
         }
 
-        private void ShowGroupMenu()
+        private void ShowGroupMenu(Rect position)
         {
             var menu = new GenericMenu();
 
@@ -202,7 +214,7 @@ namespace UGF.Logs.Editor
                 menu.AddItem(group.ContentName, i == m_group, OnGroupMenuItemSelected, i);
             }
 
-            menu.ShowAsContext();
+            menu.DropDown(position);
         }
 
         private void OnGroupMenuItemSelected(object userData)
