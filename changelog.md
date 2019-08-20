@@ -26,6 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing.
 
+## 1.0.0 - 2019-08-20
+- [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.0.0-preview.2...1.0.0)
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/4?closed=1)
+
+### Changed
+- `Log Project Settings`: reworked to support undo/redo and per platform selection.
+
+### Removed
+- `Apply and Revert GUI`: now settings applied immediately.
+
 ## 1.0.0-preview.2 - 2019-08-18
 - [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.0.0-preview.1...1.0.0-preview.2)
 - [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/3?closed=1)

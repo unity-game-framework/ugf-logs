@@ -50,9 +50,12 @@ namespace UGF.Logs.Editor
         public static LogEditorSettings GetSettings(BuildTargetGroup buildTargetGroup)
         {
             string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
-            IEnumerable<string> defines = symbols.Split(';');
+            var defines = new HashSet<string>(symbols.Split(';'));
+            var settings = new LogEditorSettings();
 
-            return new LogEditorSettings(defines);
+            settings.InternalSetSettings(defines);
+
+            return settings;
         }
 
         /// <summary>
@@ -77,8 +80,11 @@ namespace UGF.Logs.Editor
         /// <param name="buildTargetGroup">The build target group.</param>
         public static void SetSettings(LogEditorSettings settings, BuildTargetGroup buildTargetGroup)
         {
-            IEnumerable<string> defines = settings.GetDefines();
-            string symbols = string.Join(";", defines);
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
+            var defines = new HashSet<string>(symbols.Split(';'));
+
+            settings.InternalGetDefines(defines);
+            symbols = string.Join(";", defines);
 
             PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, symbols);
         }
@@ -91,6 +97,14 @@ namespace UGF.Logs.Editor
         /// </summary>
         /// <param name="settings">The log settings to apply.</param>
         public static void SetSettingsAll(LogEditorSettings settings)
+        {
+            foreach (BuildTargetGroup buildTargetGroup in InternalGetAllBuildTargetGroupValues())
+            {
+                SetSettings(settings, buildTargetGroup);
+            }
+        }
+
+        internal static IEnumerable<BuildTargetGroup> InternalGetAllBuildTargetGroupValues()
         {
             Type type = typeof(BuildTargetGroup);
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -105,7 +119,7 @@ namespace UGF.Logs.Editor
 
                     if (buildTargetGroup != BuildTargetGroup.Unknown)
                     {
-                        SetSettings(settings, buildTargetGroup);
+                        yield return buildTargetGroup;
                     }
                 }
             }
