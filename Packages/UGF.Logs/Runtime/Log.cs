@@ -24,7 +24,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as info with the specified message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_INFO` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -43,7 +43,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as info with the specified message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_INFO` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -60,7 +60,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as debug info with the specified message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_DEBUG` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_DEBUG' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -79,7 +79,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as debug info with the specified message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_INFO` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -96,7 +96,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as warning with the specified tag, message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_WARNING` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_WARNING' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -115,7 +115,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as warning with the specified tag, message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_WARNING` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_WARNING' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -132,7 +132,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as error with the specified tag, message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_ERROR` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_ERROR' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -151,7 +151,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message as error with the specified tag, message and arguments.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_ERROR` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_ERROR' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="message">The formattable message.</param>
@@ -168,7 +168,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message based on the specified exception.
         /// <para>
-        /// Invocation of this method will be included in release build, only if the `UGF_LOG_EXCEPTION` compilation symbol is defined.
+        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_EXCEPTION' compilation symbol is defined.
         /// </para>
         /// </summary>
         /// <param name="exception">The exception to log.</param>
@@ -185,7 +185,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message with the specified log type, message and arguments.
         /// <para>
-        /// Invocation of this method always include in release build.
+        /// Invocation of this method always included in release build.
         /// </para>
         /// </summary>
         /// <param name="logType">The type of the log.</param>
@@ -210,7 +210,7 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Logs message with the specified log type, message and arguments.
         /// <para>
-        /// Invocation of this method always include in release build.
+        /// Invocation of this method always included in release build.
         /// </para>
         /// </summary>
         /// <param name="logType">The type of the log.</param>

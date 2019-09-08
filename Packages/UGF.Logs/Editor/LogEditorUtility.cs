@@ -36,24 +36,24 @@ namespace UGF.Logs.Editor
         public static string DefineLogException { get; } = "UGF_LOG_EXCEPTION";
 
         /// <summary>
-        /// Gets the project log settings depends on current build target group.
+        /// Gets the log settings depends on current build target group.
         /// </summary>
-        public static LogEditorSettings GetSettings()
+        public static LogDefineSettings GetSettings()
         {
             return GetSettings(EditorUserBuildSettings.selectedBuildTargetGroup);
         }
 
         /// <summary>
-        /// Gets the project log settings depends on build target group.
+        /// Gets the log settings depends on build target group.
         /// </summary>
         /// <param name="buildTargetGroup">The build target group of the project.</param>
-        public static LogEditorSettings GetSettings(BuildTargetGroup buildTargetGroup)
+        public static LogDefineSettings GetSettings(BuildTargetGroup buildTargetGroup)
         {
             string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
             var defines = new HashSet<string>(symbols.Split(';'));
-            var settings = new LogEditorSettings();
+            var settings = new LogDefineSettings();
 
-            settings.InternalSetSettings(defines);
+            SetSettings(defines, ref settings);
 
             return settings;
         }
@@ -65,7 +65,7 @@ namespace UGF.Logs.Editor
         /// </para>
         /// </summary>
         /// <param name="settings">The log settings to apply.</param>
-        public static void SetSettings(LogEditorSettings settings)
+        public static void SetSettings(LogDefineSettings settings)
         {
             SetSettings(settings, EditorUserBuildSettings.selectedBuildTargetGroup);
         }
@@ -78,12 +78,13 @@ namespace UGF.Logs.Editor
         /// </summary>
         /// <param name="settings">The log settings to apply.</param>
         /// <param name="buildTargetGroup">The build target group.</param>
-        public static void SetSettings(LogEditorSettings settings, BuildTargetGroup buildTargetGroup)
+        public static void SetSettings(LogDefineSettings settings, BuildTargetGroup buildTargetGroup)
         {
             string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildTargetGroup);
             var defines = new HashSet<string>(symbols.Split(';'));
 
-            settings.InternalGetDefines(defines);
+            GetDefines(defines, settings);
+
             symbols = string.Join(";", defines);
 
             PlayerSettings.SetScriptingDefineSymbolsForGroup(buildTargetGroup, symbols);
@@ -96,7 +97,7 @@ namespace UGF.Logs.Editor
         /// </para>
         /// </summary>
         /// <param name="settings">The log settings to apply.</param>
-        public static void SetSettingsAll(LogEditorSettings settings)
+        public static void SetSettingsAll(LogDefineSettings settings)
         {
             foreach (BuildTargetGroup buildTargetGroup in InternalGetAllBuildTargetGroupValues())
             {
@@ -122,6 +123,36 @@ namespace UGF.Logs.Editor
                         yield return buildTargetGroup;
                     }
                 }
+            }
+        }
+
+        private static void SetSettings(ICollection<string> defines, ref LogDefineSettings setup)
+        {
+            setup.Info = defines.Contains(DefineLogInfo);
+            setup.Debug = defines.Contains(DefineLogDebug);
+            setup.Warning = defines.Contains(DefineLogWarning);
+            setup.Error = defines.Contains(DefineLogError);
+            setup.Exception = defines.Contains(DefineLogException);
+        }
+
+        private static void GetDefines(ISet<string> defines, LogDefineSettings setup)
+        {
+            SetupDefine(defines, DefineLogInfo, setup.Info);
+            SetupDefine(defines, DefineLogDebug, setup.Debug);
+            SetupDefine(defines, DefineLogWarning, setup.Warning);
+            SetupDefine(defines, DefineLogError, setup.Error);
+            SetupDefine(defines, DefineLogException, setup.Exception);
+        }
+
+        private static void SetupDefine(ISet<string> defines, string define, bool state)
+        {
+            if (state)
+            {
+                defines.Add(define);
+            }
+            else
+            {
+                defines.Remove(define);
             }
         }
     }
