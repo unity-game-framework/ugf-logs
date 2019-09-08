@@ -36,6 +36,16 @@ namespace UGF.Logs.Editor
         public static string DefineLogException { get; } = "UGF_LOG_EXCEPTION";
 
         /// <summary>
+        /// Gets the define used to include exception logs in release build. (Value is 'UGF_LOG_NOEDITOR')
+        /// </summary>
+        public static string DefineNoEditor { get; } = "UGF_LOG_NOEDITOR";
+
+        /// <summary>
+        /// Gets the define used to include exception logs in release build. (Value is 'UGF_LOG_NODEVBUILD')
+        /// </summary>
+        public static string DefineNoDevelopmentBuild { get; } = "UGF_LOG_NODEVBUILD";
+
+        /// <summary>
         /// Gets the log settings depends on current build target group.
         /// </summary>
         public static LogDefineSettings GetSettings()
@@ -133,6 +143,8 @@ namespace UGF.Logs.Editor
             setup.Warning = defines.Contains(DefineLogWarning);
             setup.Error = defines.Contains(DefineLogError);
             setup.Exception = defines.Contains(DefineLogException);
+            setup.NoEditor = defines.Contains(DefineNoEditor);
+            setup.NoDevelopmentBuild = defines.Contains(DefineNoDevelopmentBuild);
         }
 
         private static void GetDefines(ISet<string> defines, LogDefineSettings setup)
@@ -142,6 +154,8 @@ namespace UGF.Logs.Editor
             SetupDefine(defines, DefineLogWarning, setup.Warning);
             SetupDefine(defines, DefineLogError, setup.Error);
             SetupDefine(defines, DefineLogException, setup.Exception);
+            SetupDefine(defines, DefineNoEditor, setup.NoEditor);
+            SetupDefine(defines, DefineNoDevelopmentBuild, setup.NoDevelopmentBuild);
         }
 
         private static void SetupDefine(ISet<string> defines, string define, bool state)

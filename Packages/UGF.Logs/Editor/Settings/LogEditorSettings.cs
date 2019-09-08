@@ -100,14 +100,37 @@ namespace UGF.Logs.Editor.Settings
         }
 
         /// <summary>
-        /// Gets or sets the value that determines whether to mute debug logs in editor.
+        /// Gets or sets the value that determines whether 'UGF_LOG_NOEDITOR' define is specified.
         /// </summary>
-        public static bool MuteDebug
+        /// <remarks>
+        /// Returns value for the current selected platform and set value for all platforms.
+        ///
+        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
+        /// </remarks>
+        public static bool NoInEditor
         {
-            get { return m_settings.Data.MuteDebug; }
+            get { return m_settings.Data.NoInEditor; }
             set
             {
-                m_settings.Data.MuteDebug = value;
+                m_settings.Data.NoInEditor = value;
+                m_settings.Save();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the value that determines whether 'UGF_LOG_NODEVBUILD' define is specified.
+        /// </summary>
+        /// <remarks>
+        /// Returns value for the current selected platform and set value for all platforms.
+        ///
+        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
+        /// </remarks>
+        public static bool NoInDevelopmentBuild
+        {
+            get { return m_settings.Data.NoInDevelopmentBuild; }
+            set
+            {
+                m_settings.Data.NoInDevelopmentBuild = value;
                 m_settings.Save();
             }
         }

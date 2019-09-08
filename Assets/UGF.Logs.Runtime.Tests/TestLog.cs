@@ -55,12 +55,9 @@ namespace UGF.Logs.Runtime.Tests
         }
 
         [Test]
-        public void InfoTag()
+        public void Debug()
         {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Info("Tag", "Info"));
-            }
+            Log.Debug("Debug");
         }
 
         [Test]

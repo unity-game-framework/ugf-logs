@@ -32,8 +32,12 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_INFO")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Info(string message, object arg0 = null, object arg1 = null, object arg2 = null)
         {
@@ -49,8 +53,12 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_INFO")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Info(string message, params object[] args)
         {
@@ -68,8 +76,12 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_DEBUG")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Debug(string message, object arg0 = null, object arg1 = null, object arg2 = null)
         {
@@ -85,8 +97,12 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_DEBUG")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Debug(string message, params object[] args)
         {
@@ -104,8 +120,12 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_WARNING")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Warning(string message, object arg0 = null, object arg1 = null, object arg2 = null)
         {
@@ -121,8 +141,12 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_WARNING")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Warning(string message, params object[] args)
         {
@@ -140,8 +164,12 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_ERROR")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Error(string message, object arg0 = null, object arg1 = null, object arg2 = null)
         {
@@ -157,8 +185,12 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_ERROR")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         [StringFormatMethod("message")]
         public static void Error(string message, params object[] args)
         {
@@ -173,8 +205,12 @@ namespace UGF.Logs.Runtime
         /// </summary>
         /// <param name="exception">The exception to log.</param>
         [Conditional("UGF_LOG_EXCEPTION")]
+#if !UGF_LOG_NOEDITOR
         [Conditional("UNITY_EDITOR")]
+#endif
+#if !UGF_LOG_NODEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
+#endif
         public static void Exception(Exception exception)
         {
             if (exception == null) throw new ArgumentNullException(nameof(exception));

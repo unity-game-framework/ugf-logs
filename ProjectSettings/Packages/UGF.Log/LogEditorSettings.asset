@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_info: 1
   m_debug: 0
-  m_warning: 0
-  m_error: 0
-  m_exception: 0
-  m_muteDebug: 1
+  m_warning: 1
+  m_error: 1
+  m_exception: 1
+  m_noInEditor: 1
+  m_noInDevelopmentBuild: 0
