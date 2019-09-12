@@ -36,14 +36,14 @@ namespace UGF.Logs.Editor
         public static string DefineLogException { get; } = "UGF_LOG_EXCEPTION";
 
         /// <summary>
-        /// Gets the define used to include exception logs in release build. (Value is 'UGF_LOG_NOEDITOR')
+        /// Gets the define used to always include logs in 'Editor' whatever other defines are. (Value is 'UGF_LOG_INCLUDE_EDITOR')
         /// </summary>
-        public static string DefineNoEditor { get; } = "UGF_LOG_NOEDITOR";
+        public static string DefineIncludeEditor { get; } = "UGF_LOG_INCLUDE_EDITOR";
 
         /// <summary>
-        /// Gets the define used to include exception logs in release build. (Value is 'UGF_LOG_NODEVBUILD')
+        /// Gets the define used to always include logs in 'Development Build' whatever other defines are. (Value is 'UGF_LOG_INCLUDE_DEVBUILD')
         /// </summary>
-        public static string DefineNoDevelopmentBuild { get; } = "UGF_LOG_NODEVBUILD";
+        public static string DefineIncludeDevelopmentBuild { get; } = "UGF_LOG_INCLUDE_DEVBUILD";
 
         /// <summary>
         /// Gets the log settings depends on current build target group.
@@ -143,8 +143,8 @@ namespace UGF.Logs.Editor
             setup.Warning = defines.Contains(DefineLogWarning);
             setup.Error = defines.Contains(DefineLogError);
             setup.Exception = defines.Contains(DefineLogException);
-            setup.NoEditor = defines.Contains(DefineNoEditor);
-            setup.NoDevelopmentBuild = defines.Contains(DefineNoDevelopmentBuild);
+            setup.IncludeEditor = defines.Contains(DefineIncludeEditor);
+            setup.IncludeDevelopmentBuild = defines.Contains(DefineIncludeDevelopmentBuild);
         }
 
         private static void GetDefines(ISet<string> defines, LogDefineSettings setup)
@@ -154,8 +154,8 @@ namespace UGF.Logs.Editor
             SetupDefine(defines, DefineLogWarning, setup.Warning);
             SetupDefine(defines, DefineLogError, setup.Error);
             SetupDefine(defines, DefineLogException, setup.Exception);
-            SetupDefine(defines, DefineNoEditor, setup.NoEditor);
-            SetupDefine(defines, DefineNoDevelopmentBuild, setup.NoDevelopmentBuild);
+            SetupDefine(defines, DefineIncludeEditor, setup.IncludeEditor);
+            SetupDefine(defines, DefineIncludeDevelopmentBuild, setup.IncludeDevelopmentBuild);
         }
 
         private static void SetupDefine(ISet<string> defines, string define, bool state)

@@ -31,13 +31,13 @@ namespace UGF.Logs.Editor
         public bool Exception { get; set; }
 
         /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_NOEDITOR' define is specified.
+        /// Gets or sets the value that determines whether 'UGF_LOG_INCLUDE_EDITOR' define is specified.
         /// </summary>
-        public bool NoEditor { get; set; }
+        public bool IncludeEditor { get; set; }
 
         /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_NODEVBUILD' define is specified.
+        /// Gets or sets the value that determines whether 'UGF_LOG_INCLUDE_DEVBUILD' define is specified.
         /// </summary>
-        public bool NoDevelopmentBuild { get; set; }
+        public bool IncludeDevelopmentBuild { get; set; }
     }
 }

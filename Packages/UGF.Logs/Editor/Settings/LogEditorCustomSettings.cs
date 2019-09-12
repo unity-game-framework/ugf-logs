@@ -19,8 +19,8 @@ namespace UGF.Logs.Editor.Settings
                 Warning = data.Warning,
                 Error = data.Error,
                 Exception = data.Exception,
-                NoEditor = data.NoInEditor,
-                NoDevelopmentBuild = data.NoInDevelopmentBuild
+                IncludeEditor = data.AlwaysIncludeInEditor,
+                IncludeDevelopmentBuild = data.AlwaysIncludeInDevelopmentBuild
             };
 
             LogEditorUtility.SetSettingsAll(settings);
@@ -36,8 +36,8 @@ namespace UGF.Logs.Editor.Settings
             data.Warning = settings.Warning;
             data.Error = settings.Error;
             data.Exception = settings.Exception;
-            data.NoInEditor = settings.NoEditor;
-            data.NoInDevelopmentBuild = settings.NoDevelopmentBuild;
+            data.AlwaysIncludeInEditor = settings.IncludeEditor;
+            data.AlwaysIncludeInDevelopmentBuild = settings.IncludeDevelopmentBuild;
 
             return data;
         }

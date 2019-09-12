@@ -32,10 +32,10 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_INFO")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -53,10 +53,10 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_INFO")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -76,10 +76,10 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_DEBUG")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -97,10 +97,10 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_DEBUG")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -120,10 +120,10 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_WARNING")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -141,10 +141,10 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_WARNING")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -164,10 +164,10 @@ namespace UGF.Logs.Runtime
         /// <param name="arg1">The second argument.</param>
         /// <param name="arg2">The third argument.</param>
         [Conditional("UGF_LOG_ERROR")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -185,10 +185,10 @@ namespace UGF.Logs.Runtime
         /// <param name="message">The formattable message.</param>
         /// <param name="args">The arguments.</param>
         [Conditional("UGF_LOG_ERROR")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         [StringFormatMethod("message")]
@@ -205,10 +205,10 @@ namespace UGF.Logs.Runtime
         /// </summary>
         /// <param name="exception">The exception to log.</param>
         [Conditional("UGF_LOG_EXCEPTION")]
-#if !UGF_LOG_NOEDITOR
+#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
 #endif
-#if !UGF_LOG_NODEVBUILD
+#if UGF_LOG_INCLUDE_DEVBUILD
         [Conditional("DEVELOPMENT_BUILD")]
 #endif
         public static void Exception(Exception exception)
