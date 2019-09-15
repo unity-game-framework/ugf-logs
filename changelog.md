@@ -26,6 +26,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing.
 
+## 1.1.0 - 2019-09-15
+- [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.0.0...1.1.0)
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/5?closed=1)
+
+### Added
+- Package dependencies:
+    - `com.ugf.customsettings`: from `1.0.0`.
+- `Log Settings`: add options to use define settings in `Editor` and `Development Build`.
+
+### Changed
+- `Log Settings`: reworked to use `UGF.CustomSettings`.
+
 ## 1.0.0 - 2019-08-20
 - [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.0.0-preview.2...1.0.0)
 - [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/4?closed=1)
