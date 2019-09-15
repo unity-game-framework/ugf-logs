@@ -9,6 +9,6 @@
         "url": "https://github.com/unity-game-framework"
     },
     "dependencies": {
-        "com.ugf.customsettings": "0.2.0-preview"
+        "com.ugf.customsettings": "1.0.0"
     }
 }
