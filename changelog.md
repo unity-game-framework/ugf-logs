@@ -26,6 +26,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing.
 
+## 1.2.0 - 2019-11-17
+- [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.1.0...1.2.0)
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/6?closed=1)
+
+### Added
+- `LogStackTraceScope` to control type of the stacktrace logging inside the scope.
+
+### Changed
+- Update to Unity 2019.3.
+
 ## 1.1.0 - 2019-09-15
 - [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.0.0...1.1.0)
 - [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/5?closed=1)
