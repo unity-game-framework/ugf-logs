@@ -115,7 +115,7 @@ namespace UGF.Logs.Editor
             }
         }
 
-        internal static IEnumerable<BuildTargetGroup> InternalGetAllBuildTargetGroupValues()
+        private static IEnumerable<BuildTargetGroup> InternalGetAllBuildTargetGroupValues()
         {
             Type type = typeof(BuildTargetGroup);
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static);
