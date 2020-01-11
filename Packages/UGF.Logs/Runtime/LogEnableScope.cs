@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace UGF.Logs.Runtime
 {
@@ -16,26 +15,14 @@ namespace UGF.Logs.Runtime
         /// <param name="enabled">The value to enable or disable logger.</param>
         public LogEnableScope(bool enabled)
         {
-            m_enabled = false;
+            m_enabled = Log.Logger.logEnabled;
 
-            ILogger logger = Log.Logger;
-
-            if (logger != null)
-            {
-                m_enabled = logger.logEnabled;
-
-                logger.logEnabled = enabled;
-            }
+            Log.Logger.logEnabled = enabled;
         }
 
         public void Dispose()
         {
-            ILogger logger = Log.Logger;
-
-            if (logger != null)
-            {
-                logger.logEnabled = m_enabled;
-            }
+            Log.Logger.logEnabled = m_enabled;
         }
     }
 }

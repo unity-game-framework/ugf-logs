@@ -19,7 +19,9 @@ namespace UGF.Logs.Runtime
         /// <summary>
         /// Gets or sets logger to use. (Default is Unity Logger)
         /// </summary>
-        public static ILogger Logger { get; set; } = UnityEngine.Debug.unityLogger;
+        public static ILogger Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(Logger)); } }
+
+        private static ILogger m_logger = UnityEngine.Debug.unityLogger;
 
         /// <summary>
         /// Logs message as info with the specified message and arguments.
