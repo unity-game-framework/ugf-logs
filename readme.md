@@ -10,7 +10,7 @@ UGF.Logs
 
 ### Dependencies
 
-- N/A
+- [UGF.CustomSettings](https://github.com/unity-game-framework/ugf-customsettings): `2.0.0`
 
 ### Changelog
 
