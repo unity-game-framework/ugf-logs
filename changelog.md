@@ -26,6 +26,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing.
 
+## 2.0.0 - 2019-01-11
+- [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.2.0...2.0.0)
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/7?closed=1)
+
+### Added
+- `LogFilterScope` to control filter log type of the current `Log.Logger`.
+
+### Changed
+- Package dependencies:
+    - `com.ugf.customsettings`: from `1.0.0` to `2.0.0`.
+
 ## 1.2.0 - 2019-11-17
 - [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.1.0...1.2.0)
 - [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/6?closed=1)
