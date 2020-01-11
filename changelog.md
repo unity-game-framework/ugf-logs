@@ -26,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 - Nothing.
 
-## 2.0.0 - 2019-01-11
+## 2.0.0 - 2020-01-11
 - [Commits](https://github.com/unity-game-framework/ugf-logs/compare/1.2.0...2.0.0)
 - [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/7?closed=1)
 
