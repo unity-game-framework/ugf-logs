@@ -7,6 +7,7 @@ namespace UGF.Logs.Editor.Settings
     /// <summary>
     /// Provides settings logging.
     /// </summary>
+    [InitializeOnLoad]
     public static class LogEditorSettings
     {
         /// <summary>
@@ -23,7 +24,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.Info = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -41,7 +42,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.Debug = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -59,7 +60,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.Warning = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -77,7 +78,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.Error = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -95,7 +96,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.Exception = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -113,7 +114,7 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.AlwaysIncludeInEditor = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
@@ -131,16 +132,55 @@ namespace UGF.Logs.Editor.Settings
             set
             {
                 m_settings.Data.AlwaysIncludeInDevelopmentBuild = value;
-                m_settings.Save();
+                m_settings.SaveSettings();
             }
         }
 
-        private static readonly LogEditorCustomSettings m_settings = new LogEditorCustomSettings();
+        private static readonly CustomSettingsEditorPackage<LogEditorSettingsData> m_settings = new CustomSettingsEditorPackage<LogEditorSettingsData>
+        (
+            "UGF.Logs",
+            "LogEditorSettings"
+        );
+
+        static LogEditorSettings()
+        {
+            m_settings.Saved += OnSettingsSaved;
+            m_settings.Loaded += OnSettingsLoaded;
+        }
+
+        private static void OnSettingsSaved()
+        {
+            var settings = new LogDefineSettings
+            {
+                Info = m_settings.Data.Info,
+                Debug = m_settings.Data.Debug,
+                Warning = m_settings.Data.Warning,
+                Error = m_settings.Data.Error,
+                Exception = m_settings.Data.Exception,
+                IncludeEditor = m_settings.Data.AlwaysIncludeInEditor,
+                IncludeDevelopmentBuild = m_settings.Data.AlwaysIncludeInDevelopmentBuild
+            };
+
+            LogEditorUtility.SetSettingsAll(settings);
+        }
+
+        private static void OnSettingsLoaded()
+        {
+            LogDefineSettings settings = LogEditorUtility.GetSettings();
+
+            m_settings.Data.Info = settings.Info;
+            m_settings.Data.Debug = settings.Debug;
+            m_settings.Data.Warning = settings.Warning;
+            m_settings.Data.Error = settings.Error;
+            m_settings.Data.Exception = settings.Exception;
+            m_settings.Data.AlwaysIncludeInEditor = settings.IncludeEditor;
+            m_settings.Data.AlwaysIncludeInDevelopmentBuild = settings.IncludeDevelopmentBuild;
+        }
 
         [SettingsProvider, UsedImplicitly]
         private static SettingsProvider GetSettingsProvider()
         {
-            return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Log", m_settings, SettingsScope.Project);
+            return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", m_settings, SettingsScope.Project);
         }
     }
 }
