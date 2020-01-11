@@ -6,7 +6,7 @@ UGF.Logs
 
 - **Version**: `2.0.0`
 - **Unity Version**: `2019.3.0`
-- **Api Compatibility Level**: `.NET Standard 2.0`
+- **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
