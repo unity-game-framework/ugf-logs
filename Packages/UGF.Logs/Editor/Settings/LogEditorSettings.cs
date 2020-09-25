@@ -148,7 +148,7 @@ namespace UGF.Logs.Editor.Settings
             m_settings.Loaded += OnSettingsLoaded;
         }
 
-        private static void OnSettingsSaved()
+        private static void OnSettingsSaved(LogEditorSettingsData data)
         {
             var settings = new LogDefineSettings
             {
@@ -164,7 +164,7 @@ namespace UGF.Logs.Editor.Settings
             LogEditorUtility.SetSettingsAll(settings);
         }
 
-        private static void OnSettingsLoaded()
+        private static void OnSettingsLoaded(LogEditorSettingsData data)
         {
             LogDefineSettings settings = LogEditorUtility.GetSettings();
 
