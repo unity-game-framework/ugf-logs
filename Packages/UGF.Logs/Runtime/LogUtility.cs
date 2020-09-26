@@ -6,6 +6,12 @@ namespace UGF.Logs.Runtime
 {
     public static class LogUtility
     {
+        public const string LOG_INFO_DEFINE = "UGF_LOG_INFO";
+        public const string LOG_DEBUG_DEFINE = "UGF_LOG_DEBUG";
+        public const string LOG_WARNING_DEFINE = "UGF_LOG_WARNING";
+        public const string LOG_ERROR_DEFINE = "UGF_LOG_ERROR";
+        public const string LOG_EXCEPTION_DEFINE = "UGF_LOG_EXCEPTION";
+
         /// <summary>
         /// Formats the specified object arguments with message.
         /// </summary>

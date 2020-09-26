@@ -27,8 +27,8 @@ namespace UGF.Logs.Runtime
         /// Invocation of this method will be included in build only when the 'UGF_LOG_INFO' compilation symbol is defined.
         /// </remarks>
         /// <param name="message">The message.</param>
-        [Conditional("UGF_LOG_INFO")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(object message)
         {
             Message(LogType.Log, message);
@@ -42,8 +42,8 @@ namespace UGF.Logs.Runtime
         /// </remarks>
         /// <param name="message">The message.</param>
         /// <param name="arguments">The dynamic arguments used to format with message.</param>
-        [Conditional("UGF_LOG_INFO")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(string message, object arguments)
         {
             Message(LogType.Log, message, arguments);
@@ -56,8 +56,8 @@ namespace UGF.Logs.Runtime
         /// Invocation of this method will be included in build only when the 'UGF_LOG_DEBUG' compilation symbol is defined.
         /// </remarks>
         /// <param name="message">The message.</param>
-        [Conditional("UGF_LOG_DEBUG")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(object message)
         {
             Message(LogType.Log, message);
@@ -71,8 +71,8 @@ namespace UGF.Logs.Runtime
         /// </remarks>
         /// <param name="message">The message.</param>
         /// <param name="arguments">The dynamic arguments used to format with message.</param>
-        [Conditional("UGF_LOG_DEBUG")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(string message, object arguments)
         {
             Message(LogType.Log, message, arguments);
@@ -85,8 +85,8 @@ namespace UGF.Logs.Runtime
         /// Invocation of this method will be included in build only when the 'UGF_LOG_WARNING' compilation symbol is defined.
         /// </remarks>
         /// <param name="message">The message.</param>
-        [Conditional("UGF_LOG_WARNING")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(object message)
         {
             Message(LogType.Warning, message);
@@ -100,8 +100,8 @@ namespace UGF.Logs.Runtime
         /// </remarks>
         /// <param name="message">The message.</param>
         /// <param name="arguments">The dynamic arguments used to format with message.</param>
-        [Conditional("UGF_LOG_WARNING")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(string message, object arguments)
         {
             Message(LogType.Warning, message, arguments);
@@ -114,8 +114,8 @@ namespace UGF.Logs.Runtime
         /// Invocation of this method will be included in build only when the 'UGF_LOG_ERROR' compilation symbol is defined.
         /// </remarks>
         /// <param name="message">The message.</param>
-        [Conditional("UGF_LOG_ERROR")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(object message)
         {
             Message(LogType.Error, message);
@@ -129,8 +129,8 @@ namespace UGF.Logs.Runtime
         /// </remarks>
         /// <param name="message">The message.</param>
         /// <param name="arguments">The dynamic arguments used to format with message.</param>
-        [Conditional("UGF_LOG_ERROR")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(string message, object arguments)
         {
             Message(LogType.Error, message, arguments);
@@ -143,8 +143,8 @@ namespace UGF.Logs.Runtime
         /// Invocation of this method will be included in build only when the 'UGF_LOG_EXCEPTION' compilation symbol is defined.
         /// </remarks>
         /// <param name="exception">The exception to log.</param>
-        [Conditional("UGF_LOG_EXCEPTION")]
         [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_EXCEPTION_DEFINE)]
         public static void Exception(Exception exception)
         {
             Message(LogType.Exception, exception);
