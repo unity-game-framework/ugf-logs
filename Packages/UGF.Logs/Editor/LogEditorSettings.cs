@@ -1,137 +1,29 @@
-using JetBrains.Annotations;
 using UGF.CustomSettings.Editor;
+using UGF.EditorTools.Editor.Defines;
+using UGF.Logs.Runtime;
 using UnityEditor;
 
-namespace UGF.Logs.Editor.Settings
+namespace UGF.Logs.Editor
 {
-    /// <summary>
-    /// Provides settings logging.
-    /// </summary>
     [InitializeOnLoad]
     public static class LogEditorSettings
     {
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_INFO' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool LogInfo
+        public static bool EditorEnabled
         {
-            get { return m_settings.Data.Info; }
+            get { return m_settings.Data.EditorEnabled; }
             set
             {
-                m_settings.Data.Info = value;
+                m_settings.Data.EditorEnabled = value;
                 m_settings.SaveSettings();
             }
         }
 
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_DEBUG' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool LogDebug
+        public static bool BuildEnabled
         {
-            get { return m_settings.Data.Debug; }
+            get { return m_settings.Data.BuildEnabled; }
             set
             {
-                m_settings.Data.Debug = value;
-                m_settings.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_WARNING' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool LogWarning
-        {
-            get { return m_settings.Data.Warning; }
-            set
-            {
-                m_settings.Data.Warning = value;
-                m_settings.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_ERROR' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool LogError
-        {
-            get { return m_settings.Data.Error; }
-            set
-            {
-                m_settings.Data.Error = value;
-                m_settings.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_EXCEPTION' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool LogException
-        {
-            get { return m_settings.Data.Exception; }
-            set
-            {
-                m_settings.Data.Exception = value;
-                m_settings.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_INCLUDE_EDITOR' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool AlwaysIncludeInEditor
-        {
-            get { return m_settings.Data.AlwaysIncludeInEditor; }
-            set
-            {
-                m_settings.Data.AlwaysIncludeInEditor = value;
-                m_settings.SaveSettings();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the value that determines whether 'UGF_LOG_INCLUDE_DEVBUILD' define is specified.
-        /// </summary>
-        /// <remarks>
-        /// Returns value for the current selected platform and set value for all platforms.
-        ///
-        /// To setup log defines settings per platform use 'LogDefineSettings' via 'LogEditorUtility'.
-        /// </remarks>
-        public static bool AlwaysIncludeInDevelopmentBuild
-        {
-            get { return m_settings.Data.AlwaysIncludeInDevelopmentBuild; }
-            set
-            {
-                m_settings.Data.AlwaysIncludeInDevelopmentBuild = value;
+                m_settings.Data.BuildEnabled = value;
                 m_settings.SaveSettings();
             }
         }
@@ -144,43 +36,115 @@ namespace UGF.Logs.Editor.Settings
 
         static LogEditorSettings()
         {
-            // m_settings.Saved += OnSettingsSaved;
-            // m_settings.Loaded += OnSettingsLoaded;
+            m_settings.Saved += OnSettingsChanged;
+            m_settings.Loaded += OnSettingsChanged;
         }
 
-        private static void OnSettingsSaved(LogEditorSettingsData data)
+        public static void SetBuildSettings(BuildTargetGroup buildTargetGroup, LogBuildSettings settings)
         {
-            var settings = new LogDefineSettings
+            if (!TryUpdateBuildSettings(buildTargetGroup, settings))
             {
-                Info = m_settings.Data.Info,
-                Debug = m_settings.Data.Debug,
-                Warning = m_settings.Data.Warning,
-                Error = m_settings.Data.Error,
-                Exception = m_settings.Data.Exception,
-                IncludeEditor = m_settings.Data.AlwaysIncludeInEditor,
-                IncludeDevelopmentBuild = m_settings.Data.AlwaysIncludeInDevelopmentBuild
-            };
+                LogEditorSettingsData data = m_settings.Data;
 
-            LogEditorUtility.SetSettingsAll(settings);
+                var platform = new LogEditorSettingsData.Platform
+                {
+                    Group = buildTargetGroup,
+                    Settings = settings
+                };
+
+                data.Platforms.Add(platform);
+                m_settings.SaveSettings();
+            }
         }
 
-        private static void OnSettingsLoaded(LogEditorSettingsData data)
+        public static LogBuildSettings GetBuildSettings(BuildTargetGroup buildTargetGroup)
         {
-            LogDefineSettings settings = LogEditorUtility.GetSettings();
+            if (!TryGetBuildSettings(buildTargetGroup, out LogBuildSettings settings))
+            {
+                settings = new LogBuildSettings();
 
-            m_settings.Data.Info = settings.Info;
-            m_settings.Data.Debug = settings.Debug;
-            m_settings.Data.Warning = settings.Warning;
-            m_settings.Data.Error = settings.Error;
-            m_settings.Data.Exception = settings.Exception;
-            m_settings.Data.AlwaysIncludeInEditor = settings.IncludeEditor;
-            m_settings.Data.AlwaysIncludeInDevelopmentBuild = settings.IncludeDevelopmentBuild;
+                SetBuildSettings(buildTargetGroup, settings);
+            }
+
+            return settings;
+        }
+
+        public static bool TryGetBuildSettings(BuildTargetGroup buildTargetGroup, out LogBuildSettings settings)
+        {
+            LogEditorSettingsData data = m_settings.Data;
+
+            for (int i = 0; i < data.Platforms.Count; i++)
+            {
+                LogEditorSettingsData.Platform platform = data.Platforms[i];
+
+                if (platform.Group == buildTargetGroup)
+                {
+                    settings = platform.Settings;
+                    return true;
+                }
+            }
+
+            settings = default;
+            return false;
+        }
+
+        public static void ApplyBuildSettings(BuildTargetGroup buildTargetGroup, LogBuildSettings settings)
+        {
+            EnableDefine(buildTargetGroup, LogUtility.LOG_INFO_DEFINE, settings.Info);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_DEBUG_DEFINE, settings.Debug);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_WARNING_DEFINE, settings.Warning);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_ERROR_DEFINE, settings.Error);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_EXCEPTION_DEFINE, settings.Exception);
+        }
+
+        public static void ClearBuildSettings(BuildTargetGroup buildTargetGroup)
+        {
+            EnableDefine(buildTargetGroup, LogUtility.LOG_INFO_DEFINE, false);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_DEBUG_DEFINE, false);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_WARNING_DEFINE, false);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_ERROR_DEFINE, false);
+            EnableDefine(buildTargetGroup, LogUtility.LOG_EXCEPTION_DEFINE, false);
         }
 
         [SettingsProvider]
         private static SettingsProvider GetSettingsProvider()
         {
             return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", m_settings, SettingsScope.Project);
+        }
+
+        private static bool TryUpdateBuildSettings(BuildTargetGroup buildTargetGroup, LogBuildSettings settings)
+        {
+            LogEditorSettingsData data = m_settings.Data;
+
+            for (int i = 0; i < data.Platforms.Count; i++)
+            {
+                LogEditorSettingsData.Platform platform = data.Platforms[i];
+
+                if (platform.Group == buildTargetGroup)
+                {
+                    platform.Settings = settings;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static void EnableDefine(BuildTargetGroup buildTargetGroup, string define, bool value)
+        {
+            if (value)
+            {
+                DefinesEditorUtility.SetDefine(define, buildTargetGroup);
+            }
+            else
+            {
+                DefinesEditorUtility.RemoveDefine(define, buildTargetGroup);
+            }
+        }
+
+        private static void OnSettingsChanged(LogEditorSettingsData data)
+        {
+            Log.Logger.logEnabled = data.EditorEnabled;
         }
     }
 }

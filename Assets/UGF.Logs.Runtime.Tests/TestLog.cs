@@ -29,77 +29,96 @@ namespace UGF.Logs.Runtime.Tests
         }
 
         [Test]
-        public void Info()
+        public void Test2()
         {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Info("Info"));
-            }
+            Log.Info("Log: TEST");
+            Debug.Log("Debug: TEST");
         }
 
         [Test]
-        public void Info2()
+        public void Test()
         {
-#if !UNITY_EDITOR
-            bool result;
+            Log.Info("");
 
-            using (var scope = new CatchLog())
-            {
-                Log.Info("Info2");
-
-                result = scope.Received;
-            }
-
-            Assert.False(result);
+#if TEST2
+            Assert.Pass("Has TEST defined.");
+#else
+            Assert.Fail("No TEST defined.");
 #endif
         }
 
-        [Test]
-        public void Debug()
-        {
-            Log.Debug("Debug");
-        }
-
-        [Test]
-        public void Warning()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Warning("Warning"));
-            }
-        }
-
-        [Test]
-        public void Warning2()
-        {
-            bool result;
-
-            using (var scope = new CatchLog())
-            {
-                Log.Warning("Warning2");
-
-                result = scope.Received;
-            }
-
-            Assert.True(result);
-        }
-
-        [Test]
-        public void Error()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Error("Error"));
-            }
-        }
-
-        [Test]
-        public void Exception()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Exception(new Exception()));
-            }
-        }
+        //         [Test]
+        //         public void Info()
+        //         {
+        //             using (new LogEnableScope(false))
+        //             {
+        //                 Assert.DoesNotThrow(() => Log.Info("Info"));
+        //             }
+        //         }
+        //
+        //         [Test]
+        //         public void Info2()
+        //         {
+        // #if !UNITY_EDITOR
+        //             bool result;
+        //
+        //             using (var scope = new CatchLog())
+        //             {
+        //                 Log.Info("Info2");
+        //
+        //                 result = scope.Received;
+        //             }
+        //
+        //             Assert.False(result);
+        // #endif
+        //         }
+        //
+        //         [Test]
+        //         public void Debug()
+        //         {
+        //             Log.Debug("Debug");
+        //         }
+        //
+        //         [Test]
+        //         public void Warning()
+        //         {
+        //             using (new LogEnableScope(false))
+        //             {
+        //                 Assert.DoesNotThrow(() => Log.Warning("Warning"));
+        //             }
+        //         }
+        //
+        //         [Test]
+        //         public void Warning2()
+        //         {
+        //             bool result;
+        //
+        //             using (var scope = new CatchLog())
+        //             {
+        //                 Log.Warning("Warning2");
+        //
+        //                 result = scope.Received;
+        //             }
+        //
+        //             Assert.True(result);
+        //         }
+        //
+        //         [Test]
+        //         public void Error()
+        //         {
+        //             using (new LogEnableScope(false))
+        //             {
+        //                 Assert.DoesNotThrow(() => Log.Error("Error"));
+        //             }
+        //         }
+        //
+        //         [Test]
+        //         public void Exception()
+        //         {
+        //             using (new LogEnableScope(false))
+        //             {
+        //                 Assert.DoesNotThrow(() => Log.Exception(new Exception()));
+        //             }
+        //         }
     }
 }

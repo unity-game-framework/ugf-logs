@@ -1,33 +1,29 @@
+using System;
+using System.Collections.Generic;
+using UGF.CustomSettings.Runtime;
+using UnityEditor;
 using UnityEngine;
 
-namespace UGF.Logs.Editor.Settings
+namespace UGF.Logs.Editor
 {
-    internal class LogEditorSettingsData : ScriptableObject
+    internal class LogEditorSettingsData : CustomSettingsData
     {
-        [Header("Log Defines")]
-        [Tooltip("Determines whether 'UGF_LOG_INFO' define is specified for selected platform.")]
-        [SerializeField] private bool m_info;
-        [Tooltip("Determines whether 'UGF_LOG_DEBUG' define is specified for selected platform.")]
-        [SerializeField] private bool m_debug;
-        [Tooltip("Determines whether 'UGF_LOG_WARNING' define is specified for selected platform.")]
-        [SerializeField] private bool m_warning;
-        [Tooltip("Determines whether 'UGF_LOG_ERROR' define is specified for selected platform.")]
-        [SerializeField] private bool m_error;
-        [Tooltip("Determines whether 'UGF_LOG_EXCEPTION' define is specified for selected platform.")]
-        [SerializeField] private bool m_exception;
+        [SerializeField] private bool m_editorEnabled = true;
+        [SerializeField] private bool m_buildEnabled = true;
+        [SerializeField] private List<Platform> m_platforms = new List<Platform>();
 
-        [Header("Logs per Platform Defines")]
-        [Tooltip("Determines whether to always include logs in 'Editor' whatever settings are.")]
-        [SerializeField] private bool m_alwaysIncludeInEditor;
-        [Tooltip("Determines whether to always include logs in 'Development Build' whatever settings are.")]
-        [SerializeField] private bool m_alwaysIncludeInDevelopmentBuild;
+        public bool EditorEnabled { get { return m_editorEnabled; } set { m_editorEnabled = value; } }
+        public bool BuildEnabled { get { return m_buildEnabled; } set { m_buildEnabled = value; } }
+        public List<Platform> Platforms { get { return m_platforms; } }
 
-        public bool Info { get { return m_info; } set { m_info = value; } }
-        public bool Debug { get { return m_debug; } set { m_debug = value; } }
-        public bool Warning { get { return m_warning; } set { m_warning = value; } }
-        public bool Error { get { return m_error; } set { m_error = value; } }
-        public bool Exception { get { return m_exception; } set { m_exception = value; } }
-        public bool AlwaysIncludeInEditor { get { return m_alwaysIncludeInEditor; } set { m_alwaysIncludeInEditor = value; } }
-        public bool AlwaysIncludeInDevelopmentBuild { get { return m_alwaysIncludeInDevelopmentBuild; } set { m_alwaysIncludeInDevelopmentBuild = value; } }
+        [Serializable]
+        public class Platform
+        {
+            [SerializeField] private BuildTargetGroup m_group;
+            [SerializeField] private LogBuildSettings m_settings;
+
+            public BuildTargetGroup Group { get { return m_group; } set { m_group = value; } }
+            public LogBuildSettings Settings { get { return m_settings; } set { m_settings = value; } }
+        }
     }
 }
