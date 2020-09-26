@@ -6,7 +6,7 @@ namespace UGF.Logs.Runtime
     /// <summary>
     /// Represents local scope of the specified logger.
     /// </summary>
-    public struct LogScope : IDisposable
+    public readonly struct LogScope : IDisposable
     {
         private readonly ILogger m_logger;
 

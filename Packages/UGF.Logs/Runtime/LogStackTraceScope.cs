@@ -6,7 +6,7 @@ namespace UGF.Logs.Runtime
     /// <summary>
     /// Represents log stacktrace scope to control type of the stacktrace logging inside the scope.
     /// </summary>
-    public struct LogStackTraceScope : IDisposable
+    public readonly struct LogStackTraceScope : IDisposable
     {
         private readonly LogType m_logType;
         private readonly StackTraceLogType m_stackTraceType;
