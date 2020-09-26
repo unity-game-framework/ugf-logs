@@ -144,8 +144,8 @@ namespace UGF.Logs.Editor.Settings
 
         static LogEditorSettings()
         {
-            m_settings.Saved += OnSettingsSaved;
-            m_settings.Loaded += OnSettingsLoaded;
+            // m_settings.Saved += OnSettingsSaved;
+            // m_settings.Loaded += OnSettingsLoaded;
         }
 
         private static void OnSettingsSaved(LogEditorSettingsData data)
@@ -177,7 +177,7 @@ namespace UGF.Logs.Editor.Settings
             m_settings.Data.AlwaysIncludeInDevelopmentBuild = settings.IncludeDevelopmentBuild;
         }
 
-        [SettingsProvider, UsedImplicitly]
+        [SettingsProvider]
         private static SettingsProvider GetSettingsProvider()
         {
             return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", m_settings, SettingsScope.Project);

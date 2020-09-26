@@ -14,11 +14,14 @@ namespace UGF.Logs.Runtime
     public static class Log
     {
         /// <summary>
-        /// Gets or sets logger to use. (Default is Unity Logger)
+        /// Gets or sets logger to use. (Default is Unity Logger wrapper.)
         /// </summary>
+        /// <remarks>
+        /// By default logger is wrapper around Unity Logger and can be controlled separately from it, such as enabled or filter properties.
+        /// </remarks>
         public static ILogger Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(Logger)); } }
 
-        private static ILogger m_logger = UnityEngine.Debug.unityLogger;
+        private static ILogger m_logger = new Logger(UnityEngine.Debug.unityLogger);
 
         /// <summary>
         /// Logs message as info with the specified message.
