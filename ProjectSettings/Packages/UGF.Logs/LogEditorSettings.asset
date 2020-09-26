@@ -24,8 +24,8 @@ MonoBehaviour:
       m_exception: 1
   - m_group: 7
     m_settings:
-      m_info: 1
-      m_debug: 1
-      m_warning: 1
-      m_error: 1
-      m_exception: 1
+      m_info: 0
+      m_debug: 0
+      m_warning: 0
+      m_error: 0
+      m_exception: 0
