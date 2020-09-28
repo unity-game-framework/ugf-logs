@@ -107,7 +107,7 @@ namespace UGF.Logs.Editor
         }
 
         [SettingsProvider]
-        private static SettingsProvider GetSettingsProvider()
+        private static SettingsProvider GetProvider()
         {
             return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", m_settings, SettingsScope.Project);
         }
