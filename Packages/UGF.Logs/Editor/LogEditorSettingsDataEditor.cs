@@ -1,4 +1,5 @@
 ﻿using UGF.CustomSettings.Editor;
+using UGF.Defines.Editor;
 using UnityEditor;
 
 namespace UGF.Logs.Editor
@@ -6,15 +7,26 @@ namespace UGF.Logs.Editor
     [CustomEditor(typeof(LogEditorSettingsData), true)]
     internal class LogEditorSettingsDataEditor : CustomSettingsDataEditor
     {
+        private readonly DefinesPlatformSettingsDrawer m_drawer = new DefinesPlatformSettingsDrawer();
         private SerializedProperty m_propertyEditorEnabled;
-        private SerializedProperty m_propertyBuildEnabled;
-        private SerializedProperty m_propertyPlatforms;
+        private SerializedProperty m_propertyGroups;
 
         private void OnEnable()
         {
+            m_drawer.AddPlatformAllAvailable();
+            m_drawer.SetupGroupTypes();
+
             m_propertyEditorEnabled = serializedObject.FindProperty("m_editorEnabled");
-            m_propertyBuildEnabled = serializedObject.FindProperty("m_buildEnabled");
-            m_propertyPlatforms = serializedObject.FindProperty("m_platforms");
+            m_propertyGroups = serializedObject.FindProperty("m_settings.m_groups");
+
+            m_drawer.Applied += OnApplied;
+            m_drawer.Cleared += OnCleared;
+        }
+
+        private void OnDisable()
+        {
+            m_drawer.Applied -= OnApplied;
+            m_drawer.Cleared -= OnCleared;
         }
 
         public override void OnInspectorGUI()
@@ -22,82 +34,22 @@ namespace UGF.Logs.Editor
             serializedObject.UpdateIfRequiredOrScript();
 
             EditorGUILayout.PropertyField(m_propertyEditorEnabled);
-            EditorGUILayout.PropertyField(m_propertyBuildEnabled);
 
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Build Settings", EditorStyles.boldLabel);
-
-            BuildTargetGroup group = EditorGUILayout.BeginBuildTargetSelectionGrouping();
-
-            DrawBuildSettings(group);
-
-            EditorGUILayout.EndBuildTargetSelectionGrouping();
+            m_drawer.DrawGUILayout(m_propertyGroups);
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawBuildSettings(BuildTargetGroup group)
+        private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
         {
-            SerializedProperty propertySettings = GetPropertySettings(group);
-
-            DrawBuildSettings(propertySettings);
+            // DefinesEditorSettings.ApplyAll(buildTargetGroup, onlyEnabled);
+            // AssetDatabase.SaveAssets();
         }
 
-        private void DrawBuildSettings(SerializedProperty propertySettings)
+        private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
         {
-            SerializedProperty propertyInfo = propertySettings.FindPropertyRelative("m_info");
-            SerializedProperty propertyDebug = propertySettings.FindPropertyRelative("m_debug");
-            SerializedProperty propertyWarning = propertySettings.FindPropertyRelative("m_warning");
-            SerializedProperty propertyError = propertySettings.FindPropertyRelative("m_error");
-            SerializedProperty propertyException = propertySettings.FindPropertyRelative("m_exception");
-
-            EditorGUILayout.PropertyField(propertyInfo);
-            EditorGUILayout.PropertyField(propertyDebug);
-            EditorGUILayout.PropertyField(propertyWarning);
-            EditorGUILayout.PropertyField(propertyError);
-            EditorGUILayout.PropertyField(propertyException);
-        }
-
-        private SerializedProperty GetPropertySettings(BuildTargetGroup group)
-        {
-            if (!TryGetPropertySettings(group, out SerializedProperty propertySettings))
-            {
-                propertySettings = AddPropertySettings(group);
-            }
-
-            return propertySettings;
-        }
-
-        private bool TryGetPropertySettings(BuildTargetGroup group, out SerializedProperty propertySettings)
-        {
-            for (int i = 0; i < m_propertyPlatforms.arraySize; i++)
-            {
-                SerializedProperty propertyElement = m_propertyPlatforms.GetArrayElementAtIndex(i);
-                SerializedProperty propertyGroup = propertyElement.FindPropertyRelative("m_group");
-
-                if (propertyGroup.intValue == (int)group)
-                {
-                    propertySettings = propertyElement.FindPropertyRelative("m_settings");
-                    return true;
-                }
-            }
-
-            propertySettings = null;
-            return false;
-        }
-
-        private SerializedProperty AddPropertySettings(BuildTargetGroup group)
-        {
-            m_propertyPlatforms.InsertArrayElementAtIndex(m_propertyPlatforms.arraySize);
-
-            SerializedProperty propertyElement = m_propertyPlatforms.GetArrayElementAtIndex(m_propertyPlatforms.arraySize - 1);
-            SerializedProperty propertyGroup = propertyElement.FindPropertyRelative("m_group");
-            SerializedProperty propertySettings = propertyElement.FindPropertyRelative("m_settings");
-
-            propertyGroup.intValue = (int)group;
-            m_propertyPlatforms.serializedObject.ApplyModifiedProperties();
-
-            return propertySettings;
+            // DefinesEditorSettings.ClearAll(buildTargetGroup, onlyEnabled);
+            // AssetDatabase.SaveAssets();
         }
     }
 }

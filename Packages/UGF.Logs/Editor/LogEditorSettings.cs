@@ -1,5 +1,7 @@
 using UGF.CustomSettings.Editor;
+using UGF.Defines.Editor;
 using UGF.EditorTools.Editor.Defines;
+using UGF.EditorTools.Runtime.IMGUI.PlatformSettings;
 using UGF.Logs.Runtime;
 using UnityEditor;
 
@@ -17,6 +19,8 @@ namespace UGF.Logs.Editor
                 m_settings.SaveSettings();
             }
         }
+
+        public static PlatformSettings<DefinesSettings> Settings { get { return m_settings.Data.Settings; } }
 
         public static bool BuildEnabled
         {
@@ -38,6 +42,18 @@ namespace UGF.Logs.Editor
         {
             m_settings.Saved += OnSettingsChanged;
             m_settings.Loaded += OnSettingsChanged;
+        }
+
+        public static void Save()
+        {
+            m_settings.SaveSettings();
+        }
+
+        public static bool TryGetSettings(BuildTargetGroup buildTargetGroup, out DefinesSettings settings)
+        {
+            string name = buildTargetGroup.ToString();
+
+            return m_settings.Data.Settings.TryGetSettings(name, out settings);
         }
 
         public static void SetBuildSettings(BuildTargetGroup buildTargetGroup, LogBuildSettings settings)
