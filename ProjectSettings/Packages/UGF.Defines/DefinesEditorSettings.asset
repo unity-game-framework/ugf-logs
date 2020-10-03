@@ -13,6 +13,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_settings:
-    m_groups: []
+    m_groups:
+    - m_name: Standalone
+      m_settings:
+        id: 0
+    - m_name: Android
+      m_settings:
+        id: 1
   references:
     version: 1
+    00000000:
+      type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
+      data:
+        m_includeInBuild: 1
+        m_defines: []
+    00000001:
+      type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
+      data:
+        m_includeInBuild: 1
+        m_defines: []

@@ -13,19 +13,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_editorEnabled: 1
-  m_buildEnabled: 1
-  m_platforms:
-  - m_group: 1
-    m_settings:
-      m_info: 1
-      m_debug: 1
-      m_warning: 1
-      m_error: 1
-      m_exception: 1
-  - m_group: 7
-    m_settings:
-      m_info: 0
-      m_debug: 0
-      m_warning: 0
-      m_error: 0
-      m_exception: 0
+  m_settings:
+    m_groups:
+    - m_name: Standalone
+      m_settings:
+        id: 0
+    - m_name: Android
+      m_settings:
+        id: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
+      data:
+        m_includeInBuild: 1
+        m_defines:
+        - m_enabled: 0
+          m_value: UGF_LOG_INFO
+        - m_enabled: 0
+          m_value: UGF_LOG_DEBUG
+        - m_enabled: 0
+          m_value: UGF_LOG_WARNING
+        - m_enabled: 0
+          m_value: UGF_LOG_ERROR
+        - m_enabled: 0
+          m_value: UGF_LOG_EXCEPTION
+    00000001:
+      type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
+      data:
+        m_includeInBuild: 1
+        m_defines:
+        - m_enabled: 0
+          m_value: UGF_LOG_INFO
+        - m_enabled: 0
+          m_value: UGF_LOG_DEBUG
+        - m_enabled: 0
+          m_value: UGF_LOG_WARNING
+        - m_enabled: 0
+          m_value: UGF_LOG_ERROR
+        - m_enabled: 0
+          m_value: UGF_LOG_EXCEPTION

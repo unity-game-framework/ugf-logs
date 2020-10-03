@@ -7,7 +7,7 @@ namespace UGF.Logs.Editor
     [CustomEditor(typeof(LogEditorSettingsData), true)]
     internal class LogEditorSettingsDataEditor : CustomSettingsDataEditor
     {
-        private readonly DefinesPlatformSettingsDrawer m_drawer = new DefinesPlatformSettingsDrawer();
+        private readonly LogEditorSettingsDrawer m_drawer = new LogEditorSettingsDrawer();
         private SerializedProperty m_propertyEditorEnabled;
         private SerializedProperty m_propertyGroups;
 
@@ -35,7 +35,13 @@ namespace UGF.Logs.Editor
 
             EditorGUILayout.PropertyField(m_propertyEditorEnabled);
 
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Define Symbols Settings", EditorStyles.boldLabel);
+
             m_drawer.DrawGUILayout(m_propertyGroups);
+
+            EditorGUILayout.Space();
+            EditorGUILayout.HelpBox("Note: all Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
 
             serializedObject.ApplyModifiedProperties();
         }
