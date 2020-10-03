@@ -9,10 +9,6 @@ namespace UGF.Logs.Editor
 
         public void OnPreprocessBuild(BuildReport report)
         {
-            if (LogEditorSettings.BuildEnabled && LogEditorSettings.TryGetBuildSettings(report.summary.platformGroup, out LogBuildSettings settings))
-            {
-                LogEditorSettings.ApplyBuildSettings(report.summary.platformGroup, settings);
-            }
         }
     }
 }

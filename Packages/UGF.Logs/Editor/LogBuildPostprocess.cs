@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEditor.Build;
+﻿using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 
 namespace UGF.Logs.Editor
@@ -10,11 +9,6 @@ namespace UGF.Logs.Editor
 
         public void OnPostprocessBuild(BuildReport report)
         {
-            if (LogEditorSettings.BuildEnabled)
-            {
-                LogEditorSettings.ClearBuildSettings(report.summary.platformGroup);
-                AssetDatabase.SaveAssets();
-            }
         }
     }
 }
