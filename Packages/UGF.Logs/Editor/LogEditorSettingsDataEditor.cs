@@ -40,7 +40,7 @@ namespace UGF.Logs.Editor
             m_drawer.DrawGUILayout(m_propertyGroups);
 
             EditorGUILayout.Space();
-            EditorGUILayout.HelpBox("Note: all Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
+            EditorGUILayout.HelpBox("All Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
 
             serializedObject.ApplyModifiedProperties();
         }
