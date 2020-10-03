@@ -12,7 +12,7 @@ namespace UGF.Logs.Editor
 
         private class Styles
         {
-            public GUIContent IncludeInBuild { get; } = new GUIContent("Include In Build", "Determines whether to include specified enabled defines in player build.");
+            public GUIContent IncludeInBuild { get; } = new GUIContent("Include In Build", "Determines whether to include enabled defines in player build.");
             public GUIContent Log { get; } = new GUIContent("Info", "Determines whether define symbol for Log.Info method is enabled for build.");
             public GUIContent Debug { get; } = new GUIContent("Debug", "Determines whether define symbol for Log.Debug method is enabled for build.");
             public GUIContent Warning { get; } = new GUIContent("Warning", "Determines whether define symbol for Log.Warning method is enabled for build.");

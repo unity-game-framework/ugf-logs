@@ -1,4 +1,5 @@
 ﻿using UGF.Defines.Editor;
+using UGF.EditorTools.Editor.IMGUI.PlatformSettings;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -13,8 +14,11 @@ namespace UGF.Logs.Editor
         {
             BuildTargetGroup group = report.summary.platformGroup;
 
-            DefinesBuildEditorUtility.ApplyAll(group, LogEditorSettings.Settings, true);
-            AssetDatabase.SaveAssets();
+            if (LogEditorSettings.Settings.TryGetSettings(group, out DefinesSettings settings))
+            {
+                DefinesBuildEditorUtility.ApplyDefinesAll(group, settings);
+                AssetDatabase.SaveAssets();
+            }
         }
     }
 }

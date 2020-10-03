@@ -1,4 +1,5 @@
 ﻿using UGF.Defines.Editor;
+using UGF.EditorTools.Editor.IMGUI.PlatformSettings;
 using UnityEditor;
 
 namespace UGF.Logs.Editor
@@ -35,7 +36,7 @@ namespace UGF.Logs.Editor
             EditorGUILayout.PropertyField(m_propertyEditorEnabled);
 
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Define Symbols Settings", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Scripting Define Symbols", EditorStyles.boldLabel);
 
             m_drawer.DrawGUILayout(m_propertyGroups);
 
@@ -45,16 +46,22 @@ namespace UGF.Logs.Editor
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
+        private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup)
         {
-            DefinesBuildEditorUtility.ApplyAll(buildTargetGroup, LogEditorSettings.Settings, onlyEnabled);
-            AssetDatabase.SaveAssets();
+            if (LogEditorSettings.Settings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            {
+                DefinesBuildEditorUtility.ApplyDefinesAll(buildTargetGroup, settings);
+                AssetDatabase.SaveAssets();
+            }
         }
 
-        private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
+        private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup)
         {
-            DefinesBuildEditorUtility.ClearAll(buildTargetGroup, LogEditorSettings.Settings, onlyEnabled);
-            AssetDatabase.SaveAssets();
+            if (LogEditorSettings.Settings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            {
+                DefinesBuildEditorUtility.ClearDefinesAll(buildTargetGroup, settings);
+                AssetDatabase.SaveAssets();
+            }
         }
     }
 }
