@@ -1,11 +1,10 @@
-﻿using UGF.CustomSettings.Editor;
-using UGF.Defines.Editor;
+﻿using UGF.Defines.Editor;
 using UnityEditor;
 
 namespace UGF.Logs.Editor
 {
     [CustomEditor(typeof(LogEditorSettingsData), true)]
-    internal class LogEditorSettingsDataEditor : CustomSettingsDataEditor
+    internal class LogEditorSettingsDataEditor : UnityEditor.Editor
     {
         private readonly LogEditorSettingsDrawer m_drawer = new LogEditorSettingsDrawer();
         private SerializedProperty m_propertyEditorEnabled;
@@ -48,14 +47,14 @@ namespace UGF.Logs.Editor
 
         private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
         {
-            // DefinesEditorSettings.ApplyAll(buildTargetGroup, onlyEnabled);
-            // AssetDatabase.SaveAssets();
+            DefinesBuildEditorUtility.ApplyAll(buildTargetGroup, LogEditorSettings.Settings, onlyEnabled);
+            AssetDatabase.SaveAssets();
         }
 
         private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup, bool onlyEnabled)
         {
-            // DefinesEditorSettings.ClearAll(buildTargetGroup, onlyEnabled);
-            // AssetDatabase.SaveAssets();
+            DefinesBuildEditorUtility.ClearAll(buildTargetGroup, LogEditorSettings.Settings, onlyEnabled);
+            AssetDatabase.SaveAssets();
         }
     }
 }
