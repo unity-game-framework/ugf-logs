@@ -1,6 +1,5 @@
-#undef DEVELOPMENT_BUILD
-
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 
@@ -8,98 +7,68 @@ namespace UGF.Logs.Runtime.Tests
 {
     public class TestLog
     {
-        private class CatchLog : IDisposable
+        private class CollectLogs : IDisposable
         {
-            public bool Received { get; private set; }
+            public List<string> Logs { get; } = new List<string>();
 
-            public CatchLog()
+            public CollectLogs()
             {
-                Application.logMessageReceived += OnLogMessageReceived;
+                Application.logMessageReceived += OnApplicationLogMessageReceived;
             }
 
             public void Dispose()
             {
-                Application.logMessageReceived -= OnLogMessageReceived;
+                Application.logMessageReceived -= OnApplicationLogMessageReceived;
             }
 
-            private void OnLogMessageReceived(string condition, string stacktrace, LogType type)
+            private void OnApplicationLogMessageReceived(string condition, string stacktrace, LogType type)
             {
-                Received = true;
+                Logs.Add(condition);
             }
         }
 
         [Test]
-        public void Info()
+        public void LogInfo()
         {
-            using (new LogEnableScope(false))
+            using (var logs = new CollectLogs())
             {
-                Assert.DoesNotThrow(() => Log.Info("Info"));
+                Log.Info(nameof(LogInfo));
+
+                Assert.Contains(nameof(LogInfo), logs.Logs);
             }
         }
 
         [Test]
-        public void Info2()
+        public void LogDebug()
         {
-#if !UNITY_EDITOR
-            bool result;
-
-            using (var scope = new CatchLog())
+            using (var logs = new CollectLogs())
             {
-                Log.Info("Info2");
+                Log.Debug(nameof(LogDebug));
 
-                result = scope.Received;
-            }
-
-            Assert.False(result);
-#endif
-        }
-
-        [Test]
-        public void Debug()
-        {
-            Log.Debug("Debug");
-        }
-
-        [Test]
-        public void Warning()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Warning("Warning"));
+                Assert.Contains(nameof(LogDebug), logs.Logs);
             }
         }
 
         [Test]
-        public void Warning2()
+        public void LogWarning()
         {
-            bool result;
-
-            using (var scope = new CatchLog())
+            using (var logs = new CollectLogs())
             {
-                Log.Warning("Warning2");
+                Log.Warning(nameof(LogWarning));
 
-                result = scope.Received;
-            }
-
-            Assert.True(result);
-        }
-
-        [Test]
-        public void Error()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Error("Error"));
+                Assert.Contains(nameof(LogWarning), logs.Logs);
             }
         }
 
-        [Test]
-        public void Exception()
-        {
-            using (new LogEnableScope(false))
-            {
-                Assert.DoesNotThrow(() => Log.Exception(new Exception()));
-            }
-        }
+        // [Test]
+        // public void LogError()
+        // {
+        //     using (var logs = new CollectLogs())
+        //     {
+        //         Log.Error(nameof(LogError));
+        //
+        //         Assert.Contains(nameof(LogError), logs.Logs);
+        //     }
+        // }
     }
 }

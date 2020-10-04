@@ -6,10 +6,7 @@ namespace UGF.Logs.Runtime
     /// <summary>
     /// Represents local scope of the log to change filter log type of the current logger specified in <see cref="Log"/>.
     /// </summary>
-    /// <remarks>
-    /// See also: https://docs.unity3d.com/2019.3/Documentation/ScriptReference/Logger-filterLogType.html.
-    /// </remarks>
-    public struct LogFilterScope : IDisposable
+    public readonly struct LogFilterScope : IDisposable
     {
         private readonly LogType m_filterLogType;
 

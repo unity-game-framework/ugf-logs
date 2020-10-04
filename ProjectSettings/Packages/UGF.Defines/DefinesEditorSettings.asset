@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2bc204a131968e4c88a804a522600ff, type: 3}
+  m_Script: {fileID: 11500000, guid: e22aea6a9e0849e5a94143c4fb764944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_editorEnabled: 1
+  m_restoreDefinesAfterBuild: 1
   m_settings:
     m_groups:
     - m_name: Standalone
@@ -27,29 +27,9 @@ MonoBehaviour:
       type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
       data:
         m_includeInBuild: 1
-        m_defines:
-        - m_enabled: 1
-          m_value: UGF_LOG_INFO
-        - m_enabled: 1
-          m_value: UGF_LOG_DEBUG
-        - m_enabled: 1
-          m_value: UGF_LOG_WARNING
-        - m_enabled: 0
-          m_value: UGF_LOG_ERROR
-        - m_enabled: 0
-          m_value: UGF_LOG_EXCEPTION
+        m_defines: []
     00000001:
       type: {class: DefinesSettings, ns: UGF.Defines.Editor, asm: UGF.Defines.Editor}
       data:
         m_includeInBuild: 1
-        m_defines:
-        - m_enabled: 0
-          m_value: UGF_LOG_INFO
-        - m_enabled: 0
-          m_value: UGF_LOG_DEBUG
-        - m_enabled: 0
-          m_value: UGF_LOG_WARNING
-        - m_enabled: 0
-          m_value: UGF_LOG_ERROR
-        - m_enabled: 0
-          m_value: UGF_LOG_EXCEPTION
+        m_defines: []

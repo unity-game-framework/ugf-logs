@@ -5,7 +5,7 @@ namespace UGF.Logs.Runtime
     /// <summary>
     /// Represents local scope of the log to temporarily enable or disable logging of the current logger specified in <see cref="Log"/>.
     /// </summary>
-    public struct LogEnableScope : IDisposable
+    public readonly struct LogEnableScope : IDisposable
     {
         private readonly bool m_enabled;
 
