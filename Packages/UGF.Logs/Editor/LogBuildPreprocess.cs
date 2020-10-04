@@ -14,7 +14,7 @@ namespace UGF.Logs.Editor
         {
             BuildTargetGroup group = report.summary.platformGroup;
 
-            if (LogEditorSettings.Settings.TryGetSettings(group, out DefinesSettings settings))
+            if (LogEditorSettings.Settings.TryGetSettings(group, out DefinesSettings settings) && settings.IncludeInBuild)
             {
                 DefinesBuildEditorUtility.ApplyDefinesAll(group, settings);
                 AssetDatabase.SaveAssets();
