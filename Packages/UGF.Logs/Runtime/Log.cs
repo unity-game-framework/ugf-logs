@@ -1,271 +1,195 @@
 using System;
 using System.Diagnostics;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace UGF.Logs.Runtime
 {
     /// <summary>
     /// Represents access to logging using specified logger.
-    /// <para>
-    /// Some methods are included in release build only if the specific compilation symbol is defined.
-    /// </para>
-    /// <para>
-    /// All methods are included in development build.
-    /// </para>
     /// </summary>
+    /// <remarks>
+    /// Some methods are included in build only when the specific compilation symbol is defined.
+    /// Invocation of all methods always included in editor.
+    /// </remarks>
     public static class Log
     {
         /// <summary>
-        /// Gets or sets logger to use. (Default is Unity Logger)
+        /// Gets or sets logger to use. (Default is Unity Logger wrapper.)
         /// </summary>
+        /// <remarks>
+        /// By default logger is wrapper around Unity Logger and can be controlled separately from it, such as enabled or filter properties.
+        /// </remarks>
         public static ILogger Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(Logger)); } }
 
-        private static ILogger m_logger = UnityEngine.Debug.unityLogger;
+        private static ILogger m_logger = new Logger(UnityEngine.Debug.unityLogger);
 
         /// <summary>
-        /// Logs message as info with the specified message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
-        /// </para>
+        /// Logs message as info with the specified message.
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [Conditional("UGF_LOG_INFO")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_INFO' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Info(string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
+        public static void Info(object message)
         {
-            Message(LogType.Log, message, arg0, arg1, arg2);
+            Message(LogType.Log, message);
         }
 
         /// <summary>
         /// Logs message as info with the specified message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
-        /// </para>
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [Conditional("UGF_LOG_INFO")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_INFO' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
+        /// <param name="arguments">The dynamic arguments used to format with message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Info(string message, params object[] args)
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
+        public static void Info(string message, object arguments)
         {
-            Message(LogType.Log, message, args);
+            Message(LogType.Log, message, arguments);
+        }
+
+        /// <summary>
+        /// Logs message as debug info with the specified message.
+        /// </summary>
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_DEBUG' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
+        public static void Debug(object message)
+        {
+            Message(LogType.Log, message);
         }
 
         /// <summary>
         /// Logs message as debug info with the specified message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_DEBUG' compilation symbol is defined.
-        /// </para>
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [Conditional("UGF_LOG_DEBUG")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_DEBUG' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
+        /// <param name="arguments">The dynamic arguments used to format with message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Debug(string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
+        public static void Debug(string message, object arguments)
         {
-            Message(LogType.Log, message, arg0, arg1, arg2);
+            Message(LogType.Log, message, arguments);
         }
 
         /// <summary>
-        /// Logs message as debug info with the specified message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_INFO' compilation symbol is defined.
-        /// </para>
+        /// Logs message as warning info with the specified message.
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [Conditional("UGF_LOG_DEBUG")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_WARNING' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Debug(string message, params object[] args)
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
+        public static void Warning(object message)
         {
-            Message(LogType.Log, message, args);
+            Message(LogType.Warning, message);
         }
 
         /// <summary>
-        /// Logs message as warning with the specified tag, message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_WARNING' compilation symbol is defined.
-        /// </para>
+        /// Logs message as warning with the specified message and arguments.
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [Conditional("UGF_LOG_WARNING")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_WARNING' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
+        /// <param name="arguments">The dynamic arguments used to format with message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Warning(string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
+        public static void Warning(string message, object arguments)
         {
-            Message(LogType.Warning, message, arg0, arg1, arg2);
+            Message(LogType.Warning, message, arguments);
         }
 
         /// <summary>
-        /// Logs message as warning with the specified tag, message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_WARNING' compilation symbol is defined.
-        /// </para>
+        /// Logs message as error info with the specified message.
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [Conditional("UGF_LOG_WARNING")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_ERROR' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Warning(string message, params object[] args)
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
+        public static void Error(object message)
         {
-            Message(LogType.Warning, message, args);
+            Message(LogType.Error, message);
         }
 
         /// <summary>
-        /// Logs message as error with the specified tag, message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_ERROR' compilation symbol is defined.
-        /// </para>
+        /// Logs message as error with the specified message and arguments.
         /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [Conditional("UGF_LOG_ERROR")]
-#if UGF_LOG_INCLUDE_EDITOR
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_ERROR' compilation symbol is defined.
+        /// </remarks>
+        /// <param name="message">The message.</param>
+        /// <param name="arguments">The dynamic arguments used to format with message.</param>
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Error(string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
+        public static void Error(string message, object arguments)
         {
-            Message(LogType.Error, message, arg0, arg1, arg2);
-        }
-
-        /// <summary>
-        /// Logs message as error with the specified tag, message and arguments.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_ERROR' compilation symbol is defined.
-        /// </para>
-        /// </summary>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [Conditional("UGF_LOG_ERROR")]
-#if UGF_LOG_INCLUDE_EDITOR
-        [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
-        [StringFormatMethod("message")]
-        public static void Error(string message, params object[] args)
-        {
-            Message(LogType.Error, message, args);
+            Message(LogType.Error, message, arguments);
         }
 
         /// <summary>
         /// Logs message based on the specified exception.
-        /// <para>
-        /// Invocation of this method will be included in release build, only if the 'UGF_LOG_EXCEPTION' compilation symbol is defined.
-        /// </para>
         /// </summary>
+        /// <remarks>
+        /// Invocation of this method will be included in build only when the 'UGF_LOG_EXCEPTION' compilation symbol is defined.
+        /// </remarks>
         /// <param name="exception">The exception to log.</param>
-        [Conditional("UGF_LOG_EXCEPTION")]
-#if UGF_LOG_INCLUDE_EDITOR
         [Conditional("UNITY_EDITOR")]
-#endif
-#if UGF_LOG_INCLUDE_DEVBUILD
-        [Conditional("DEVELOPMENT_BUILD")]
-#endif
+        [Conditional(LogUtility.LOG_EXCEPTION_DEFINE)]
         public static void Exception(Exception exception)
         {
-            if (exception == null) throw new ArgumentNullException(nameof(exception));
+            Message(LogType.Exception, exception);
+        }
 
-            Logger.LogException(exception);
+        /// <summary>
+        /// Logs message with the specified log type and message.
+        /// </summary>
+        /// <remarks>
+        /// Invocation of this method always included in build.
+        /// </remarks>
+        /// <param name="logType">The type of the log.</param>
+        /// <param name="message">The message.</param>
+        public static void Message(LogType logType, object message)
+        {
+            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
+            if (message == null) throw new ArgumentNullException(nameof(message));
+
+            if (logType == LogType.Exception && message is Exception exception)
+            {
+                Logger.LogException(exception);
+            }
+            else
+            {
+                Logger.Log(logType, message);
+            }
         }
 
         /// <summary>
         /// Logs message with the specified log type, message and arguments.
-        /// <para>
-        /// Invocation of this method always included in release build.
-        /// </para>
         /// </summary>
+        /// <remarks>
+        /// Invocation of this method always included in build.
+        /// </remarks>
         /// <param name="logType">The type of the log.</param>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="arg0">The first argument.</param>
-        /// <param name="arg1">The second argument.</param>
-        /// <param name="arg2">The third argument.</param>
-        [StringFormatMethod("message")]
-        public static void Message(LogType logType, string message, object arg0 = null, object arg1 = null, object arg2 = null)
+        /// <param name="message">The message.</param>
+        /// <param name="arguments">The dynamic arguments used to format with message.</param>
+        public static void Message(LogType logType, string message, object arguments)
         {
-            if (message == null) throw new ArgumentNullException(nameof(message));
-            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
+            message = LogUtility.Format(message, arguments);
 
-            if (arg0 != null || arg1 != null || arg2 != null)
-            {
-                message = string.Format(message, arg0, arg1, arg2);
-            }
-
-            Logger.Log(logType, message);
-        }
-
-        /// <summary>
-        /// Logs message with the specified log type, message and arguments.
-        /// <para>
-        /// Invocation of this method always included in release build.
-        /// </para>
-        /// </summary>
-        /// <param name="logType">The type of the log.</param>
-        /// <param name="message">The formattable message.</param>
-        /// <param name="args">The arguments.</param>
-        [StringFormatMethod("message")]
-        public static void Message(LogType logType, string message, params object[] args)
-        {
-            if (message == null) throw new ArgumentNullException(nameof(message));
-            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
-
-            if (args.Length > 0)
-            {
-                message = string.Format(message, args);
-            }
-
-            Logger.Log(logType, message);
+            Message(logType, message);
         }
     }
 }
