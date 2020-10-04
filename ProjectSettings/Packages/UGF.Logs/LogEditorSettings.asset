@@ -30,7 +30,7 @@ MonoBehaviour:
         m_defines:
         - m_enabled: 1
           m_value: UGF_LOG_INFO
-        - m_enabled: 0
+        - m_enabled: 1
           m_value: UGF_LOG_DEBUG
         - m_enabled: 1
           m_value: UGF_LOG_WARNING
