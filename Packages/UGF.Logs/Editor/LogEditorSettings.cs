@@ -11,17 +11,17 @@ namespace UGF.Logs.Editor
     {
         public static bool EditorEnabled
         {
-            get { return m_settings.Data.EditorEnabled; }
+            get { return Settings.Data.EditorEnabled; }
             set
             {
-                m_settings.Data.EditorEnabled = value;
-                m_settings.SaveSettings();
+                Settings.Data.EditorEnabled = value;
+                Settings.SaveSettings();
             }
         }
 
-        public static PlatformSettings<DefinesSettings> Settings { get { return m_settings.Data.Settings; } }
+        public static PlatformSettings<DefinesSettings> PlatformSettings { get { return Settings.Data.Settings; } }
 
-        private static readonly CustomSettingsEditorPackage<LogEditorSettingsData> m_settings = new CustomSettingsEditorPackage<LogEditorSettingsData>
+        public static CustomSettingsEditorPackage<LogEditorSettingsData> Settings { get; } = new CustomSettingsEditorPackage<LogEditorSettingsData>
         (
             "UGF.Logs",
             "LogEditorSettings"
@@ -29,19 +29,14 @@ namespace UGF.Logs.Editor
 
         static LogEditorSettings()
         {
-            m_settings.Saved += OnSettingsChanged;
-            m_settings.Loaded += OnSettingsChanged;
-        }
-
-        public static void Save()
-        {
-            m_settings.SaveSettings();
+            Settings.Saved += OnSettingsChanged;
+            Settings.Loaded += OnSettingsChanged;
         }
 
         [SettingsProvider]
         private static SettingsProvider GetProvider()
         {
-            return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", m_settings, SettingsScope.Project);
+            return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", Settings, SettingsScope.Project);
         }
 
         private static void OnSettingsChanged(LogEditorSettingsData data)

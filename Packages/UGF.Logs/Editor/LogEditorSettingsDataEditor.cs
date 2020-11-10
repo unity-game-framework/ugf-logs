@@ -48,7 +48,7 @@ namespace UGF.Logs.Editor
 
         private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup)
         {
-            if (LogEditorSettings.Settings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            if (LogEditorSettings.PlatformSettings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
             {
                 DefinesBuildEditorUtility.ApplyDefinesAll(buildTargetGroup, settings);
                 AssetDatabase.SaveAssets();
@@ -57,7 +57,7 @@ namespace UGF.Logs.Editor
 
         private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup)
         {
-            if (LogEditorSettings.Settings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            if (LogEditorSettings.PlatformSettings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
             {
                 DefinesBuildEditorUtility.ClearDefinesAll(buildTargetGroup, settings);
                 AssetDatabase.SaveAssets();

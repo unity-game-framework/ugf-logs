@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UGF.Logs.Editor
 {
-    internal class LogEditorSettingsData : CustomSettingsData
+    public class LogEditorSettingsData : CustomSettingsData
     {
         [SerializeField] private bool m_editorEnabled = true;
         [SerializeField] private PlatformSettings<DefinesSettings> m_settings = new PlatformSettings<DefinesSettings>();
