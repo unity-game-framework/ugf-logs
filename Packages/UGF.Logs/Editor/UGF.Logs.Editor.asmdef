@@ -1,5 +1,6 @@
 {
     "name": "UGF.Logs.Editor",
+    "rootNamespace": "UGF.Logs.Editor",
     "references": [
         "GUID:6ca210c6fc8b79d4292f3cdb1061c73e",
         "GUID:4806a292f99efd44aba38aea20847e17",
