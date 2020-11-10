@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/4.0.0) - 2020-11-10  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/9?closed=1)  
+    
+
+### Changed
+
+- Update to Unity 2020.2 ([#23](https://github.com/unity-game-framework/ugf-logs/pull/23))  
+    - Dependencies updated: `com.ugf.defines` to `2.0.0`.
+
+### Removed
+
+- Remove LogEditorSettings.Save method ([#24](https://github.com/unity-game-framework/ugf-logs/pull/24))  
+    - Remove `LogEditorSettings.Save` method, use `LogEditorSettings.Settings.SaveSettings` instead.
+    - Change `LogEditorSettingsData` class to be public.
+    - Change `LogEditorSettings.Settings` property name to `LogEditorSettings.PlatformSettings`.
+    - Change `CustomSettingsEditorPackage<LogEditorSettingsData>` instance to be public and accessible from `LogEditorSettings`.
+
 ## [3.0.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/3.0.0) - 2020-10-04  
 
 ### Release Notes

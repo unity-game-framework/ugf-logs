@@ -4,13 +4,13 @@ UGF.Logs
 
 ## Info
 
-- **Version**: `3.0.0`
-- **Unity**: `2020.1`
+- **Version**: `4.0.0`
+- **Unity**: `2020.2`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
-- `com.ugf.defines`: `1.0.1`
+- `com.ugf.defines`: `2.0.0`
 
 
 ### Description
