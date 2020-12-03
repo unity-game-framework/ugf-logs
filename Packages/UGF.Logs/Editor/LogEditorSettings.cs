@@ -11,15 +11,15 @@ namespace UGF.Logs.Editor
     {
         public static bool EditorEnabled
         {
-            get { return Settings.Data.EditorEnabled; }
+            get { return Settings.GetData().EditorEnabled; }
             set
             {
-                Settings.Data.EditorEnabled = value;
+                Settings.GetData().EditorEnabled = value;
                 Settings.SaveSettings();
             }
         }
 
-        public static PlatformSettings<DefinesSettings> PlatformSettings { get { return Settings.Data.Settings; } }
+        public static PlatformSettings<DefinesSettings> PlatformSettings { get { return Settings.GetData().Settings; } }
 
         public static CustomSettingsEditorPackage<LogEditorSettingsData> Settings { get; } = new CustomSettingsEditorPackage<LogEditorSettingsData>
         (
