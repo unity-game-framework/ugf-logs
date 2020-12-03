@@ -38,7 +38,7 @@ namespace UGF.Logs.Editor
 
         protected override void OnDrawGUI(Rect position, SerializedProperty propertyGroups)
         {
-            if (m_styles == null) m_styles = new Styles();
+            m_styles ??= new Styles();
 
             base.OnDrawGUI(position, propertyGroups);
         }
