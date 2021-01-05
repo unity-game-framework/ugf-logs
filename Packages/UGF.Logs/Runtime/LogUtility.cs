@@ -50,6 +50,9 @@ namespace UGF.Logs.Runtime
             if (message == null) throw new ArgumentNullException(nameof(message));
             if (arguments == null) throw new ArgumentNullException(nameof(arguments));
 
+#if ENABLE_IL2CPP
+            return $"{message}: {arguments}.";
+#else
             var builder = new StringBuilder(message);
 
             builder.Append(": ");
@@ -76,6 +79,7 @@ namespace UGF.Logs.Runtime
             builder.Append('.');
 
             return builder.ToString();
+#endif
         }
     }
 }
