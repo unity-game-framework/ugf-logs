@@ -60,6 +60,24 @@ namespace UGF.Logs.Runtime.Tests
             }
         }
 
+        [Test]
+        public void LogWithException()
+        {
+            try
+            {
+                throw new Exception("Test exception.");
+            }
+            catch (Exception exception)
+            {
+                Log.Info("Message.", exception, new
+                {
+                    argument = 10
+                });
+
+                Log.Warning("Warning", exception);
+            }
+        }
+
         // [Test]
         // public void LogError()
         // {
