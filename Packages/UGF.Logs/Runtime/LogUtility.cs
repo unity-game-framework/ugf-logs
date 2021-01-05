@@ -12,6 +12,21 @@ namespace UGF.Logs.Runtime
         public const string LOG_ERROR_DEFINE = "UGF_LOG_ERROR";
         public const string LOG_EXCEPTION_DEFINE = "UGF_LOG_EXCEPTION";
 
+        public static string Format(string message, Exception exception)
+        {
+            if (message == null) throw new ArgumentNullException(nameof(message));
+            if (exception == null) throw new ArgumentNullException(nameof(exception));
+
+            var builder = new StringBuilder(message);
+
+            builder.AppendLine();
+            builder.Append(exception);
+            builder.AppendLine();
+            builder.Append("--- End of attached exception ---");
+
+            return builder.ToString();
+        }
+
         /// <summary>
         /// Formats the specified object arguments with message.
         /// </summary>

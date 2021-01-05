@@ -52,6 +52,13 @@ namespace UGF.Logs.Runtime
             Message(LogType.Log, message, arguments);
         }
 
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
+        public static void Info(string message, Exception exception, object arguments = null)
+        {
+            Message(LogType.Log, message, exception, arguments);
+        }
+
         /// <summary>
         /// Logs message as debug info with the specified message.
         /// </summary>
@@ -79,6 +86,13 @@ namespace UGF.Logs.Runtime
         public static void Debug(string message, object arguments)
         {
             Message(LogType.Log, message, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
+        public static void Debug(string message, Exception exception, object arguments = null)
+        {
+            Message(LogType.Log, message, exception, arguments);
         }
 
         /// <summary>
@@ -110,6 +124,13 @@ namespace UGF.Logs.Runtime
             Message(LogType.Warning, message, arguments);
         }
 
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
+        public static void Warning(string message, Exception exception, object arguments = null)
+        {
+            Message(LogType.Warning, message, exception, arguments);
+        }
+
         /// <summary>
         /// Logs message as error info with the specified message.
         /// </summary>
@@ -137,6 +158,13 @@ namespace UGF.Logs.Runtime
         public static void Error(string message, object arguments)
         {
             Message(LogType.Error, message, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
+        public static void Error(string message, Exception exception, object arguments = null)
+        {
+            Message(LogType.Error, message, exception, arguments);
         }
 
         /// <summary>
@@ -188,6 +216,18 @@ namespace UGF.Logs.Runtime
         public static void Message(LogType logType, string message, object arguments)
         {
             message = LogUtility.Format(message, arguments);
+
+            Message(logType, message);
+        }
+
+        public static void Message(LogType logType, string message, Exception exception, object arguments = null)
+        {
+            if (arguments != null)
+            {
+                message = LogUtility.Format(message, arguments);
+            }
+
+            message = LogUtility.Format(message, exception);
 
             Message(logType, message);
         }
