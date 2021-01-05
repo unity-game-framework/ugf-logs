@@ -73,6 +73,8 @@ namespace UGF.Logs.Runtime.Tests
                 {
                     argument = 10
                 });
+
+                Log.Warning("Warning", exception);
             }
         }
 
