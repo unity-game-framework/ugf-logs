@@ -6,6 +6,7 @@ namespace UGF.Logs.Runtime
     /// <summary>
     /// Represents local scope of the specified logger.
     /// </summary>
+    [Obsolete("LogScope with ILogger has been deprecated. Use LogHandlerScope instead.")]
     public readonly struct LogScope : IDisposable
     {
         private readonly ILogger m_logger;
