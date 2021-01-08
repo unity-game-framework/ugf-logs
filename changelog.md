@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/4.3.0) - 2021-01-08  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/13?closed=1)  
+    
+
+### Added
+
+- Add log handler to replace Unity references ([#37](https://github.com/unity-game-framework/ugf-logs/pull/37))  
+    - Add `ILogHandler` interface to implement any type of log handler.
+    - Add `LogTags` with major log tags constants, such as `Info`, `Warning`, `Error` and etc.
+    - Change `Log` methods to use `Handler` instead of `Logger` property.
+    - Deprecate `Log.Logger` property and `Log.Message` methods with _Unity_ `LogType` parameter, use `Handler` and `Message` methods with `tag` argument instead.
+    - Deprecate `LogScope` disposable structure. use `LogHandlerScope` instead.
+
 ## [4.2.1](https://github.com/unity-game-framework/ugf-logs/releases/tag/4.2.1) - 2021-01-05  
 
 ### Release Notes
