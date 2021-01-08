@@ -8,6 +8,7 @@ namespace UGF.Logs.Runtime
     /// </summary>
     public readonly struct LogFilterScope : IDisposable
     {
+        private readonly LogHandlerUnity m_handler;
         private readonly LogType m_filterLogType;
 
         /// <summary>
@@ -16,14 +17,26 @@ namespace UGF.Logs.Runtime
         /// <param name="filterLogType">The type of the filter.</param>
         public LogFilterScope(LogType filterLogType)
         {
-            m_filterLogType = Log.Logger.filterLogType;
+            if (Log.Handler is LogHandlerUnity handler)
+            {
+                m_handler = handler;
+                m_filterLogType = handler.UnityLogger.filterLogType;
 
-            Log.Logger.filterLogType = filterLogType;
+                handler.UnityLogger.filterLogType = filterLogType;
+            }
+            else
+            {
+                m_handler = null;
+                m_filterLogType = LogType.Log;
+            }
         }
 
         public void Dispose()
         {
-            Log.Logger.filterLogType = m_filterLogType;
+            if (m_handler != null)
+            {
+                m_handler.UnityLogger.filterLogType = m_filterLogType;
+            }
         }
     }
 }

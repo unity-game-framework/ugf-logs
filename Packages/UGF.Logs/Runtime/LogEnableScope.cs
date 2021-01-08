@@ -7,6 +7,7 @@ namespace UGF.Logs.Runtime
     /// </summary>
     public readonly struct LogEnableScope : IDisposable
     {
+        private readonly ILogHandlerWithEnable m_handler;
         private readonly bool m_enabled;
 
         /// <summary>
@@ -15,14 +16,26 @@ namespace UGF.Logs.Runtime
         /// <param name="enabled">The value to enable or disable logger.</param>
         public LogEnableScope(bool enabled)
         {
-            m_enabled = Log.Logger.logEnabled;
+            if (Log.Handler is ILogHandlerWithEnable handler)
+            {
+                m_handler = handler;
+                m_enabled = handler.IsEnabled;
 
-            Log.Logger.logEnabled = enabled;
+                handler.IsEnabled = enabled;
+            }
+            else
+            {
+                m_handler = null;
+                m_enabled = false;
+            }
         }
 
         public void Dispose()
         {
-            Log.Logger.logEnabled = m_enabled;
+            if (m_handler != null)
+            {
+                m_handler.IsEnabled = m_enabled;
+            }
         }
     }
 }
