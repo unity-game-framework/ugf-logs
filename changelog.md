@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.0.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.0.0) - 2021-01-08  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/14?closed=1)  
+    
+
+### Removed
+
+- Remove deprecated unity logger ([#39](https://github.com/unity-game-framework/ugf-logs/pull/39))  
+    - Remove deprecated properties and methods from `Log` related to _Unity_ logger.
+    - Remove `LogScope` disposable structure.
+
+    Read about previous changes: #37
+
 ## [4.3.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/4.3.0) - 2021-01-08  
 
 ### Release Notes
