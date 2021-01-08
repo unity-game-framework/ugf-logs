@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics;
-using UnityEngine;
 
 namespace UGF.Logs.Runtime
 {
@@ -11,17 +10,11 @@ namespace UGF.Logs.Runtime
     /// Some methods are included in build only when the specific compilation symbol is defined.
     /// Invocation of all methods always included in editor.
     /// </remarks>
-    public static class Log
+    public static partial class Log
     {
-        /// <summary>
-        /// Gets or sets logger to use. (Default is Unity Logger wrapper.)
-        /// </summary>
-        /// <remarks>
-        /// By default logger is wrapper around Unity Logger and can be controlled separately from it, such as enabled or filter properties.
-        /// </remarks>
-        public static ILogger Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(Logger)); } }
+        public static ILogHandler Handler { get { return m_handler; } set { m_handler = value ?? throw new ArgumentNullException(nameof(value)); } }
 
-        private static ILogger m_logger = new Logger(UnityEngine.Debug.unityLogger);
+        private static ILogHandler m_handler = new LogHandlerConsole();
 
         /// <summary>
         /// Logs message as info with the specified message.
@@ -34,7 +27,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(object message)
         {
-            Message(LogType.Log, message);
+            Message(LogTags.INFO, message);
         }
 
         /// <summary>
@@ -49,14 +42,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(string message, object arguments)
         {
-            Message(LogType.Log, message, arguments);
+            Message(LogTags.INFO, message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(string message, Exception exception, object arguments = null)
         {
-            Message(LogType.Log, message, exception, arguments);
+            Message(LogTags.INFO, message, exception, arguments);
         }
 
         /// <summary>
@@ -70,7 +63,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(object message)
         {
-            Message(LogType.Log, message);
+            Message(LogTags.DEBUG, message);
         }
 
         /// <summary>
@@ -85,14 +78,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(string message, object arguments)
         {
-            Message(LogType.Log, message, arguments);
+            Message(LogTags.DEBUG, message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(string message, Exception exception, object arguments = null)
         {
-            Message(LogType.Log, message, exception, arguments);
+            Message(LogTags.DEBUG, message, exception, arguments);
         }
 
         /// <summary>
@@ -106,7 +99,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(object message)
         {
-            Message(LogType.Warning, message);
+            Message(LogTags.WARNING, message);
         }
 
         /// <summary>
@@ -121,14 +114,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(string message, object arguments)
         {
-            Message(LogType.Warning, message, arguments);
+            Message(LogTags.WARNING, message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(string message, Exception exception, object arguments = null)
         {
-            Message(LogType.Warning, message, exception, arguments);
+            Message(LogTags.WARNING, message, exception, arguments);
         }
 
         /// <summary>
@@ -142,7 +135,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(object message)
         {
-            Message(LogType.Error, message);
+            Message(LogTags.ERROR, message);
         }
 
         /// <summary>
@@ -157,14 +150,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(string message, object arguments)
         {
-            Message(LogType.Error, message, arguments);
+            Message(LogTags.ERROR, message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(string message, Exception exception, object arguments = null)
         {
-            Message(LogType.Error, message, exception, arguments);
+            Message(LogTags.ERROR, message, exception, arguments);
         }
 
         /// <summary>
@@ -178,49 +171,17 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_EXCEPTION_DEFINE)]
         public static void Exception(Exception exception)
         {
-            Message(LogType.Exception, exception);
+            Message(LogTags.EXCEPTION, exception);
         }
 
-        /// <summary>
-        /// Logs message with the specified log type and message.
-        /// </summary>
-        /// <remarks>
-        /// Invocation of this method always included in build.
-        /// </remarks>
-        /// <param name="logType">The type of the log.</param>
-        /// <param name="message">The message.</param>
-        public static void Message(LogType logType, object message)
-        {
-            if (Logger == null) throw new InvalidOperationException("The logger not specified.");
-            if (message == null) throw new ArgumentNullException(nameof(message));
-
-            if (logType == LogType.Exception && message is Exception exception)
-            {
-                Logger.LogException(exception);
-            }
-            else
-            {
-                Logger.Log(logType, message);
-            }
-        }
-
-        /// <summary>
-        /// Logs message with the specified log type, message and arguments.
-        /// </summary>
-        /// <remarks>
-        /// Invocation of this method always included in build.
-        /// </remarks>
-        /// <param name="logType">The type of the log.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="arguments">The dynamic arguments used to format with message.</param>
-        public static void Message(LogType logType, string message, object arguments)
+        public static void Message(string tag, string message, object arguments)
         {
             message = LogUtility.Format(message, arguments);
 
-            Message(logType, message);
+            Message(tag, message);
         }
 
-        public static void Message(LogType logType, string message, Exception exception, object arguments = null)
+        public static void Message(string tag, string message, Exception exception, object arguments = null)
         {
             if (arguments != null)
             {
@@ -229,7 +190,12 @@ namespace UGF.Logs.Runtime
 
             message = LogUtility.Format(message, exception);
 
-            Message(logType, message);
+            Message(tag, message);
+        }
+
+        public static void Message(string tag, object value)
+        {
+            Handler.Write(tag, value);
         }
     }
 }

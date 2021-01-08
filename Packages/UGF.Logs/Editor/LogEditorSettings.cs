@@ -41,7 +41,10 @@ namespace UGF.Logs.Editor
 
         private static void OnSettingsChanged(LogEditorSettingsData data)
         {
-            Log.Logger.logEnabled = data.EditorEnabled;
+            if (Log.Handler is ILogHandlerWithEnable handler)
+            {
+                handler.IsEnabled = data.EditorEnabled;
+            }
         }
     }
 }
