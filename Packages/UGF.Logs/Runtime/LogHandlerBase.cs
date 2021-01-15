@@ -8,6 +8,8 @@ namespace UGF.Logs.Runtime
         {
             if (string.IsNullOrEmpty(tag)) throw new ArgumentException("Value cannot be null or empty.", nameof(tag));
             if (value == null) throw new ArgumentNullException(nameof(value));
+
+            OnWrite(tag, value);
         }
 
         protected abstract void OnWrite(string tag, object value);

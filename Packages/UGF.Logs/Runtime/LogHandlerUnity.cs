@@ -48,6 +48,11 @@ namespace UGF.Logs.Runtime
 
                     break;
                 }
+                default:
+                {
+                    UnityLogger.Log(tag, value);
+                    break;
+                }
             }
         }
     }
