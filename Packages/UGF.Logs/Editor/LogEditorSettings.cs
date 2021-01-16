@@ -29,6 +29,8 @@ namespace UGF.Logs.Editor
 
         static LogEditorSettings()
         {
+            LogsUpdateEnable();
+
             Settings.Saved += OnSettingsChanged;
             Settings.Loaded += OnSettingsChanged;
         }
@@ -41,9 +43,14 @@ namespace UGF.Logs.Editor
 
         private static void OnSettingsChanged(LogEditorSettingsData data)
         {
+            LogsUpdateEnable();
+        }
+
+        private static void LogsUpdateEnable()
+        {
             if (Log.Handler is ILogHandlerWithEnable handler)
             {
-                handler.IsEnabled = data.EditorEnabled;
+                handler.IsEnabled = EditorEnabled;
             }
         }
     }
