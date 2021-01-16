@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.1](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.1) - 2021-01-16  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/16?closed=1)  
+    
+
+### Fixed
+
+- Fix logs enable in editor do not have effect after editor restart ([#47](https://github.com/unity-game-framework/ugf-logs/pull/47))  
+    - Fix log handler does not update enable state after editor restarted.
+
 ## [5.1.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.0) - 2021-01-15  
 
 ### Release Notes
