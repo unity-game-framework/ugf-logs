@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.3](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.3) - 2021-01-24  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/18?closed=1)  
+    
+
+### Fixed
+
+- Fix auto creation of settings file on editor initialization ([#55](https://github.com/unity-game-framework/ugf-logs/pull/55))  
+    - Fix `LogEditorSettings` to check when settings file exists before change log handler enable state.
+- Fix logs settings not display ([#54](https://github.com/unity-game-framework/ugf-logs/pull/54))  
+    - Update dependencies with required fix: `com.ugf.defines` to `2.1.2` version.
+
 ## [5.1.2](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.2) - 2021-01-24  
 
 ### Release Notes
