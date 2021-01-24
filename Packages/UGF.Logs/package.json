@@ -23,6 +23,6 @@
     "registry": "https://api.bintray.com/content/unity-game-framework/public"
   },
   "dependencies": {
-    "com.ugf.defines": "2.1.1"
+    "com.ugf.defines": "2.1.2"
   }
 }
