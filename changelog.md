@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.2](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.2) - 2021-01-24  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/17?closed=1)  
+    
+
+### Changed
+
+- Update defines package ([#50](https://github.com/unity-game-framework/ugf-logs/pull/50))  
+    - Update dependencies: `com.ugf.defines` to `2.1.1` version.
+    - Update required _Unity_ version to `2020.2.2f1`.
+
 ## [5.1.1](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.1) - 2021-01-16  
 
 ### Release Notes
