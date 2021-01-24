@@ -29,7 +29,10 @@ namespace UGF.Logs.Editor
 
         static LogEditorSettings()
         {
-            LogsUpdateEnable();
+            if (Settings.Exists())
+            {
+                LogsUpdateEnable();
+            }
 
             Settings.Saved += OnSettingsChanged;
             Settings.Loaded += OnSettingsChanged;
