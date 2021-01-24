@@ -3,6 +3,7 @@
   "displayName": "UGF.Logs",
   "version": "5.1.1",
   "unity": "2020.2",
+  "unityRelease": "2f1",
   "apiCompatibility": ".NET Standard 2.0",
   "description": "Provides utilities for conditional compiled logs.",
   "author": {
@@ -22,6 +23,6 @@
     "registry": "https://api.bintray.com/content/unity-game-framework/public"
   },
   "dependencies": {
-    "com.ugf.defines": "2.1.0"
+    "com.ugf.defines": "2.1.1"
   }
 }
