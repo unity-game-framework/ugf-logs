@@ -2,8 +2,7 @@
   "name": "com.ugf.logs",
   "displayName": "UGF.Logs",
   "version": "5.1.3",
-  "unity": "2020.2",
-  "unityRelease": "2f1",
+  "unity": "2020.3",
   "apiCompatibility": ".NET Standard 2.0",
   "description": "Provides utilities for conditional compiled logs.",
   "author": {
@@ -17,10 +16,7 @@
   "changelogUrl": "https://github.com/unity-game-framework/ugf-logs/blob/master/changelog.md",
   "licensesUrl": "https://github.com/unity-game-framework/ugf-logs/blob/master/license",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@unity-game-framework"
-  },
-  "bintray": {
-    "registry": "https://api.bintray.com/content/unity-game-framework/public"
+    "registry": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
   },
   "dependencies": {
     "com.ugf.defines": "2.1.4"
