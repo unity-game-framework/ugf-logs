@@ -41,7 +41,7 @@ namespace UGF.Logs.Editor
         [SettingsProvider]
         private static SettingsProvider GetProvider()
         {
-            return new CustomSettingsProvider<LogEditorSettingsData>("Project/UGF/Logs", Settings, SettingsScope.Project);
+            return new CustomSettingsProvider<LogEditorSettingsData>("Project/Unity Game Framework/Logs", Settings, SettingsScope.Project);
         }
 
         private static void OnSettingsChanged(LogEditorSettingsData data)
