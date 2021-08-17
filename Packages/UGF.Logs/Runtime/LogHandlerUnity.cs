@@ -8,6 +8,10 @@ namespace UGF.Logs.Runtime
         public ILogger UnityLogger { get; }
         public bool IsEnabled { get { return UnityLogger.logEnabled; } set { UnityLogger.logEnabled = value; } }
 
+        public LogHandlerUnity() : this(Debug.unityLogger)
+        {
+        }
+
         public LogHandlerUnity(ILogger unityLogger)
         {
             UnityLogger = unityLogger ?? throw new ArgumentNullException(nameof(unityLogger));
