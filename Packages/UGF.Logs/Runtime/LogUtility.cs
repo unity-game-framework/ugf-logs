@@ -93,7 +93,7 @@ namespace UGF.Logs.Runtime
             {
                 LogEntry entry = entries[i];
 
-                builder.AppendLine($"[{entry.Time:g}] {entry.Tag}: {entry.Value}");
+                builder.AppendLine(@$"[{entry.Time:hh\:mm\:ss\.fff}] {entry.Tag}: {entry.Value}");
 
                 if (includeStackTrace && entry.HasStackTrace)
                 {
