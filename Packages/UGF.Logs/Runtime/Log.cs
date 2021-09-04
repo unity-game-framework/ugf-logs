@@ -12,9 +12,9 @@ namespace UGF.Logs.Runtime
     /// </remarks>
     public static partial class Log
     {
-        public static ILogHandler Handler { get { return m_handler; } set { m_handler = value ?? throw new ArgumentNullException(nameof(value)); } }
+        public static ILog Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(value)); } }
 
-        private static ILogHandler m_handler = new LogHandlerConsole();
+        private static ILog m_logger = new LogHandled(new LogHandlerUnity());
 
         /// <summary>
         /// Logs message as info with the specified message.
@@ -27,7 +27,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(object message)
         {
-            Message(LogTags.INFO, message);
+            Logger.Info(message);
         }
 
         /// <summary>
@@ -42,14 +42,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(string message, object arguments)
         {
-            Message(LogTags.INFO, message, arguments);
+            Logger.Info(message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(string message, Exception exception, object arguments = null)
         {
-            Message(LogTags.INFO, message, exception, arguments);
+            Logger.Info(message, exception, arguments);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(object message)
         {
-            Message(LogTags.DEBUG, message);
+            Logger.Debug(message);
         }
 
         /// <summary>
@@ -78,14 +78,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(string message, object arguments)
         {
-            Message(LogTags.DEBUG, message, arguments);
+            Logger.Debug(message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
         public static void Debug(string message, Exception exception, object arguments = null)
         {
-            Message(LogTags.DEBUG, message, exception, arguments);
+            Logger.Debug(message, exception, arguments);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(object message)
         {
-            Message(LogTags.WARNING, message);
+            Logger.Warning(message);
         }
 
         /// <summary>
@@ -114,14 +114,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(string message, object arguments)
         {
-            Message(LogTags.WARNING, message, arguments);
+            Logger.Warning(message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(string message, Exception exception, object arguments = null)
         {
-            Message(LogTags.WARNING, message, exception, arguments);
+            Logger.Warning(message, exception, arguments);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(object message)
         {
-            Message(LogTags.ERROR, message);
+            Logger.Error(message);
         }
 
         /// <summary>
@@ -150,14 +150,14 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(string message, object arguments)
         {
-            Message(LogTags.ERROR, message, arguments);
+            Logger.Error(message, arguments);
         }
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_ERROR_DEFINE)]
         public static void Error(string message, Exception exception, object arguments = null)
         {
-            Message(LogTags.ERROR, message, exception, arguments);
+            Logger.Error(message, exception, arguments);
         }
 
         /// <summary>
@@ -171,31 +171,22 @@ namespace UGF.Logs.Runtime
         [Conditional(LogUtility.LOG_EXCEPTION_DEFINE)]
         public static void Exception(Exception exception)
         {
-            Message(LogTags.EXCEPTION, exception);
+            Logger.Exception(exception);
         }
 
         public static void Message(string tag, string message, object arguments)
         {
-            message = LogUtility.Format(message, arguments);
-
-            Message(tag, message);
+            Logger.Message(tag, message, arguments);
         }
 
         public static void Message(string tag, string message, Exception exception, object arguments = null)
         {
-            if (arguments != null)
-            {
-                message = LogUtility.Format(message, arguments);
-            }
-
-            message = LogUtility.Format(message, exception);
-
-            Message(tag, message);
+            Logger.Message(tag, message, exception, arguments);
         }
 
         public static void Message(string tag, object value)
         {
-            Handler.Write(tag, value);
+            Logger.Message(tag, value);
         }
     }
 }

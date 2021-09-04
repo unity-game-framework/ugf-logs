@@ -16,7 +16,7 @@ namespace UGF.Logs.Runtime
         /// <param name="enabled">The value to enable or disable logger.</param>
         public LogEnableScope(bool enabled)
         {
-            if (Log.Handler is ILogHandlerWithEnable handler)
+            if (Log.Logger is LogHandled { Handler: ILogHandlerWithEnable handler })
             {
                 m_handler = handler;
                 m_enabled = handler.IsEnabled;

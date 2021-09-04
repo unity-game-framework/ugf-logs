@@ -51,7 +51,7 @@ namespace UGF.Logs.Editor
 
         private static void LogsUpdateEnable()
         {
-            if (Log.Handler is ILogHandlerWithEnable handler)
+            if (Log.Logger is LogHandled { Handler: ILogHandlerWithEnable handler })
             {
                 handler.IsEnabled = EditorEnabled;
             }

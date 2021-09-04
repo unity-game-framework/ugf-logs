@@ -17,7 +17,7 @@ namespace UGF.Logs.Runtime
         /// <param name="filterLogType">The type of the filter.</param>
         public LogFilterScope(LogType filterLogType)
         {
-            if (Log.Handler is LogHandlerUnity handler)
+            if (Log.Logger is LogHandled { Handler: LogHandlerUnity handler })
             {
                 m_handler = handler;
                 m_filterLogType = handler.UnityLogger.filterLogType;

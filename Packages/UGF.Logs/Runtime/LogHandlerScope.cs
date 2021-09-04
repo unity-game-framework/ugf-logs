@@ -2,6 +2,7 @@
 
 namespace UGF.Logs.Runtime
 {
+    [Obsolete("LogHandlerScope has been deprecated. Use LogScope instead.")]
     public readonly struct LogHandlerScope : IDisposable
     {
         private readonly ILogHandler m_handler;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
@@ -80,6 +81,28 @@ namespace UGF.Logs.Runtime
 
             return builder.ToString();
 #endif
+        }
+
+        public static string Format(IReadOnlyList<LogEntry> entries, bool includeStackTrace = true)
+        {
+            if (entries == null) throw new ArgumentNullException(nameof(entries));
+
+            var builder = new StringBuilder();
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                LogEntry entry = entries[i];
+
+                builder.AppendLine(@$"[{entry.Time:hh\:mm\:ss\.fff}] {entry.Tag}: {entry.Value}");
+
+                if (includeStackTrace && entry.HasStackTrace)
+                {
+                    builder.AppendLine("---");
+                    builder.AppendLine(entry.StackTrace);
+                }
+            }
+
+            return builder.ToString();
         }
     }
 }
