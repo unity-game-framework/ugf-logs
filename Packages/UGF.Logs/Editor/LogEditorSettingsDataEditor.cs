@@ -37,9 +37,6 @@ namespace UGF.Logs.Editor
                 EditorGUILayout.LabelField("Scripting Define Symbols", EditorStyles.boldLabel);
 
                 m_drawer.DrawGUILayout(m_propertyGroups);
-
-                EditorGUILayout.Space();
-                EditorGUILayout.HelpBox("All Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
             }
 
             EditorGUILayout.Space();
@@ -60,6 +57,9 @@ namespace UGF.Logs.Editor
 
                 EditorGUILayout.Space();
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.HelpBox("All Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
         }
 
         private void OnApply()
