@@ -158,7 +158,7 @@ namespace UGF.Logs.Editor
                     ? label
                     : m_styles.UnknownDefineLabel;
 
-                EditorGUI.LabelField(position, defineLabel.text, $"Define not found: '{define}'.");
+                EditorGUI.LabelField(position, defineLabel.text, $"Define not found: '{define}'");
             }
         }
 
