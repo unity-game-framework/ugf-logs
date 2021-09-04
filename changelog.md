@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.2.0) - 2021-09-04  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/20?closed=1)  
+    
+
+### Added
+
+- Add log instance implementation ([#63](https://github.com/unity-game-framework/ugf-logs/pull/63))  
+    - Change dependencies: `com.ugf.defines` to `2.1.5` version.
+    - Add `ILog` interface to implement custom loggers and extensions for each type of the log.
+    - Add `LogHandled` class as default implementation of `ILog` which use specified `ILogHandler`.
+    - Add `LogHandlerEntries` class as implementation of `ILogHandler` to report each log as `LogEntry` structure.
+    - Add `LogHandlerUnity` default constructor with _Unity Logger_.
+    - Add `LogScope` structure to control usage of `ILog` in specific scope.
+    - Add `LogUtility.Format()` method to format collection of `LogEntry` elements.
+    - Deprecate `Log.Handler` property, use `Logger` property instead to change logging behaviour.
+    - Deprecate `LogHandlerScope` structure, use `LogScope` instead.
+
 ## [5.1.4](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.1.4) - 2021-05-25  
 
 ### Release Notes
