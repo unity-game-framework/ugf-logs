@@ -1,6 +1,9 @@
 ﻿using UGF.Defines.Editor;
 using UGF.EditorTools.Editor.IMGUI.PlatformSettings;
+using UGF.EditorTools.Editor.IMGUI.Scopes;
+using UGF.EditorTools.Editor.Platforms;
 using UnityEditor;
+using UnityEngine;
 
 namespace UGF.Logs.Editor
 {
@@ -13,53 +16,72 @@ namespace UGF.Logs.Editor
 
         private void OnEnable()
         {
-            m_drawer.AddPlatformAllAvailable();
-            m_drawer.SetupGroupTypes();
+            m_drawer.Enable();
 
             m_propertyEditorEnabled = serializedObject.FindProperty("m_editorEnabled");
             m_propertyGroups = serializedObject.FindProperty("m_settings.m_groups");
-
-            m_drawer.Applied += OnApplied;
-            m_drawer.Cleared += OnCleared;
         }
 
         private void OnDisable()
         {
-            m_drawer.Applied -= OnApplied;
-            m_drawer.Cleared -= OnCleared;
+            m_drawer.Disable();
         }
 
         public override void OnInspectorGUI()
         {
-            serializedObject.UpdateIfRequiredOrScript();
+            using (new SerializedObjectUpdateScope(serializedObject))
+            {
+                EditorGUILayout.PropertyField(m_propertyEditorEnabled);
 
-            EditorGUILayout.PropertyField(m_propertyEditorEnabled);
+                EditorGUILayout.Space();
+                EditorGUILayout.LabelField("Scripting Define Symbols", EditorStyles.boldLabel);
+
+                m_drawer.DrawGUILayout(m_propertyGroups);
+
+                EditorGUILayout.Space();
+                EditorGUILayout.HelpBox("All Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
+            }
 
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Scripting Define Symbols", EditorStyles.boldLabel);
 
-            m_drawer.DrawGUILayout(m_propertyGroups);
+            using (new EditorGUILayout.HorizontalScope())
+            {
+                GUILayout.FlexibleSpace();
 
-            EditorGUILayout.Space();
-            EditorGUILayout.HelpBox("All Log methods enabled at Editor whether define symbol enabled or not.", MessageType.Info);
+                if (GUILayout.Button("Clear"))
+                {
+                    OnClear();
+                }
 
-            serializedObject.ApplyModifiedProperties();
+                if (GUILayout.Button("Apply"))
+                {
+                    OnApply();
+                }
+
+                EditorGUILayout.Space();
+            }
         }
 
-        private void OnApplied(string groupName, BuildTargetGroup buildTargetGroup)
+        private void OnApply()
         {
-            if (LogEditorSettings.PlatformSettings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            string platformName = m_drawer.GetSelectedPlatformName();
+            PlatformInfo platform = PlatformEditorUtility.GetPlatform(platformName);
+
+            if (LogEditorSettings.PlatformSettings.TryGetSettings(platform.BuildTargetGroup, out DefinesSettings settings))
             {
-                DefinesBuildEditorUtility.ApplyDefinesAll(buildTargetGroup, settings);
+                DefinesBuildEditorUtility.ApplyDefinesAll(platform.BuildTargetGroup, settings);
                 AssetDatabase.SaveAssets();
             }
         }
 
-        private void OnCleared(string groupName, BuildTargetGroup buildTargetGroup)
+        private void OnClear()
         {
-            if (LogEditorSettings.PlatformSettings.TryGetSettings(buildTargetGroup, out DefinesSettings settings))
+            string platformName = m_drawer.GetSelectedPlatformName();
+            PlatformInfo platform = PlatformEditorUtility.GetPlatform(platformName);
+
+            if (LogEditorSettings.PlatformSettings.TryGetSettings(platform.BuildTargetGroup, out DefinesSettings settings))
             {
-                DefinesBuildEditorUtility.ClearDefinesAll(buildTargetGroup, settings);
+                DefinesBuildEditorUtility.ClearDefinesAll(platform.BuildTargetGroup, settings);
                 AssetDatabase.SaveAssets();
             }
         }
