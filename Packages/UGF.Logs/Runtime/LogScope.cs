@@ -12,12 +12,12 @@ namespace UGF.Logs.Runtime
 
             m_log = Log.Logger;
 
-            Log.Logger = log;
+            Log.SetLogger(log);
         }
 
         public void Dispose()
         {
-            Log.Logger = m_log;
+            Log.SetLogger(m_log);
         }
     }
 }
