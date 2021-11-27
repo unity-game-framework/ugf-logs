@@ -12,9 +12,24 @@ namespace UGF.Logs.Runtime
     /// </remarks>
     public static partial class Log
     {
-        public static ILog Logger { get { return m_logger; } set { m_logger = value ?? throw new ArgumentNullException(nameof(value)); } }
+        public static ILog Logger
+        {
+            get { return m_logger ?? throw new ArgumentException("Value not specified."); }
+            [Obsolete("Logger setter is deprecated. Use SetLogger method instead.")]
+            set { SetLogger(value); }
+        }
 
-        private static ILog m_logger = new LogHandled(new LogHandlerUnity());
+        private static ILog m_logger;
+
+        public static void SetLogger(ILog logger)
+        {
+            m_logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
+        public static void ClearLogger()
+        {
+            m_logger = null;
+        }
 
         /// <summary>
         /// Logs message as info with the specified message.
