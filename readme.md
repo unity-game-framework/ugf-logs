@@ -4,13 +4,14 @@ UGF.Logs
 
 ## Info
 
-- **Version**: `5.2.1`
+- **Version**: `5.2.2`
 - **Unity**: `2021.2`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies
 
 - `com.ugf.defines`: `2.1.5`
+- `com.ugf.editortools`: `2.1.0`
 
 
 ### Description
