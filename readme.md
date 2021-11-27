@@ -4,8 +4,8 @@ UGF.Logs
 
 ## Info
 
-- **Version**: `5.2.0`
-- **Unity**: `2020.3`
+- **Version**: `5.2.1`
+- **Unity**: `2021.2`
 - **API Compatibility Level**: `.NET Standard 2.0`
 
 ### Dependencies

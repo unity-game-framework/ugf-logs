@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.1](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.2.1) - 2021-11-27  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/21?closed=1)  
+    
+
+### Fixed
+
+- Fix log.logger property accessor ([#65](https://github.com/unity-game-framework/ugf-logs/pull/65))  
+    - Update package _Unity_ version to `2021.2`.
+    - Add `Log.SetLogger()` and `ClearLogger()` methods to control current logger.
+    - Deprecate `Log.Logger` setter, use `Log.SetLogger()` method instead.
+
 ## [5.2.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.2.0) - 2021-09-04  
 
 ### Release Notes
