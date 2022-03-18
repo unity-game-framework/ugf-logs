@@ -31,6 +31,13 @@ namespace UGF.Logs.Runtime
             m_logger = null;
         }
 
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
+        public static void Info(LogMessageHandler handler)
+        {
+            Logger.Info(handler);
+        }
+
         /// <summary>
         /// Logs message as info with the specified message.
         /// </summary>
@@ -65,6 +72,13 @@ namespace UGF.Logs.Runtime
         public static void Info(string message, Exception exception, object arguments = null)
         {
             Logger.Info(message, exception, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
+        public static void Debug(LogMessageHandler handler)
+        {
+            Logger.Debug(handler);
         }
 
         /// <summary>
@@ -103,6 +117,13 @@ namespace UGF.Logs.Runtime
             Logger.Debug(message, exception, arguments);
         }
 
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
+        public static void Warning(LogMessageHandler handler)
+        {
+            Logger.Warning(handler);
+        }
+
         /// <summary>
         /// Logs message as warning info with the specified message.
         /// </summary>
@@ -137,6 +158,13 @@ namespace UGF.Logs.Runtime
         public static void Warning(string message, Exception exception, object arguments = null)
         {
             Logger.Warning(message, exception, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
+        public static void Error(LogMessageHandler handler)
+        {
+            Logger.Error(handler);
         }
 
         /// <summary>
