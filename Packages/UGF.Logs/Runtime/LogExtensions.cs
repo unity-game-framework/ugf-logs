@@ -7,6 +7,13 @@ namespace UGF.Logs.Runtime
     {
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
+        public static void Info(this ILog log, LogMessageHandler handler)
+        {
+            Message(log, LogTags.INFO, handler);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(this ILog log, object message)
         {
             Message(log, LogTags.INFO, message);
@@ -24,6 +31,13 @@ namespace UGF.Logs.Runtime
         public static void Info(this ILog log, string message, Exception exception, object arguments = null)
         {
             Message(log, LogTags.INFO, message, exception, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_DEBUG_DEFINE)]
+        public static void Debug(this ILog log, LogMessageHandler handler)
+        {
+            Message(log, LogTags.DEBUG, handler);
         }
 
         [Conditional("UNITY_EDITOR")]
@@ -49,6 +63,13 @@ namespace UGF.Logs.Runtime
 
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_WARNING_DEFINE)]
+        public static void Warning(this ILog log, LogMessageHandler handler)
+        {
+            Message(log, LogTags.WARNING, handler);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_WARNING_DEFINE)]
         public static void Warning(this ILog log, object message)
         {
             Message(log, LogTags.WARNING, message);
@@ -66,6 +87,13 @@ namespace UGF.Logs.Runtime
         public static void Warning(this ILog log, string message, Exception exception, object arguments = null)
         {
             Message(log, LogTags.WARNING, message, exception, arguments);
+        }
+
+        [Conditional("UNITY_EDITOR")]
+        [Conditional(LogUtility.LOG_ERROR_DEFINE)]
+        public static void Error(this ILog log, LogMessageHandler handler)
+        {
+            Message(log, LogTags.ERROR, handler);
         }
 
         [Conditional("UNITY_EDITOR")]
@@ -94,6 +122,13 @@ namespace UGF.Logs.Runtime
         public static void Exception(this ILog log, Exception exception)
         {
             Message(log, LogTags.EXCEPTION, exception);
+        }
+
+        public static void Message(this ILog log, string tag, LogMessageHandler handler)
+        {
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
+
+            Message(log, tag, handler());
         }
 
         public static void Message(this ILog log, string tag, string message, object arguments)
