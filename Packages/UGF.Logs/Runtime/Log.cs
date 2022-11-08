@@ -217,14 +217,29 @@ namespace UGF.Logs.Runtime
             Logger.Exception(exception);
         }
 
+        public static void Message(object target, string tag, string message, object arguments)
+        {
+            Message(tag, LogUtility.Format(target, message), arguments);
+        }
+
         public static void Message(string tag, string message, object arguments)
         {
             Logger.Message(tag, message, arguments);
         }
 
+        public static void Message(object target, string tag, string message, Exception exception, object arguments = null)
+        {
+            Message(tag, LogUtility.Format(target, message), exception, arguments);
+        }
+
         public static void Message(string tag, string message, Exception exception, object arguments = null)
         {
             Logger.Message(tag, message, exception, arguments);
+        }
+
+        public static void Message(object target, string tag, object value)
+        {
+            Message(tag, LogUtility.Format(tag, value));
         }
 
         public static void Message(string tag, object value)

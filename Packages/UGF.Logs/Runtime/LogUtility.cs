@@ -13,6 +13,13 @@ namespace UGF.Logs.Runtime
         public const string LOG_ERROR_DEFINE = "UGF_LOG_ERROR";
         public const string LOG_EXCEPTION_DEFINE = "UGF_LOG_EXCEPTION";
 
+        public static string Format(object target, object value)
+        {
+            if (target == null) throw new ArgumentNullException(nameof(target));
+
+            return $"{target.GetType().Name}: {value}";
+        }
+
         public static string Format(string message, Exception exception)
         {
             if (message == null) throw new ArgumentNullException(nameof(message));
