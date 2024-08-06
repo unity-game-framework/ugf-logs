@@ -28,6 +28,19 @@ namespace UGF.Logs.Runtime.Tests
         }
 
         [Test]
+        public void LogLabeled()
+        {
+            using (var logs = new CollectLogs())
+            {
+                ILog log = Log.CreateWithLabel<TestLog>();
+
+                log.Info(nameof(LogLabeled));
+
+                Assert.Contains("TestLog: LogLabeled", logs.Logs);
+            }
+        }
+
+        [Test]
         public void LogInfo()
         {
             using (var logs = new CollectLogs())
