@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.4.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.4.0) - 2024-08-06  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-logs/milestone/24?closed=1)  
+    
+
+### Added
+
+- Add log instance with label ([#72](https://github.com/unity-game-framework/ugf-logs/issues/72))  
+    - Update dependencies: `com.ugf.editortools` to `2.18.0` version.
+    - Update package _Unity_ version to `2023.2`.
+    - Update package registry to _UPM Hub_.
+    - Add `Log.CreateWithLabel()` method and overloads to create logger with label.
+    - Add `LogLabeled` class to create logger with label.
+
 ## [5.3.0](https://github.com/unity-game-framework/ugf-logs/releases/tag/5.3.0) - 2022-03-18  
 
 ### Release Notes
