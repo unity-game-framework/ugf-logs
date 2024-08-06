@@ -2,7 +2,7 @@
   "name": "com.ugf.logs",
   "displayName": "UGF.Logs",
   "version": "5.3.0",
-  "unity": "2021.2",
+  "unity": "2023.2",
   "apiCompatibility": ".NET Standard 2.1",
   "description": "Provides utilities for conditional compiled logs.",
   "author": {
@@ -16,10 +16,10 @@
   "changelogUrl": "https://github.com/unity-game-framework/ugf-logs/blob/master/changelog.md",
   "licensesUrl": "https://github.com/unity-game-framework/ugf-logs/blob/master/license",
   "publishConfig": {
-    "registry": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    "registry": "https://api.upmhub.org/registries/unity-game-framework"
   },
   "dependencies": {
     "com.ugf.defines": "2.1.5",
-    "com.ugf.editortools": "2.1.0"
+    "com.ugf.editortools": "2.18.0"
   }
 }
