@@ -31,6 +31,16 @@ namespace UGF.Logs.Runtime
             m_logger = null;
         }
 
+        public static ILog CreateWithLabel<T>(string messageFormat = "{0}: {1}")
+        {
+            return CreateWithLabel(typeof(T).Name, messageFormat);
+        }
+
+        public static ILog CreateWithLabel(string label, string messageFormat = "{0}: {1}")
+        {
+            return new LogLabeled(Logger, label, messageFormat);
+        }
+
         [Conditional("UNITY_EDITOR")]
         [Conditional(LogUtility.LOG_INFO_DEFINE)]
         public static void Info(LogMessageHandler handler)
